@@ -1,4 +1,5 @@
-import { useRef, useEffect, useState, useMemo, useId, type FC, type PointerEvent } from 'react';
+import { useRef, useEffect, useState, useMemo, useId } from 'react';
+import type { FC, PointerEvent } from 'react';
 
 interface CurvedLoopProps {
     marqueeText?: string;
@@ -108,18 +109,8 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
     const cursorStyle = interactive ? (dragRef.current ? 'grabbing' : 'grab') : 'auto';
 
     return (
-        <div
-            className="min-h-screen flex items-center justify-center w-full"
-            style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerLeave={endDrag}
-        >
-            <svg
-                className="select-none w-full overflow-visible block aspect-[100/12] text-[6rem] font-bold uppercase leading-none"
-                viewBox="0 0 1440 120"
-            >
+        <div className="min-h-screen flex items-center justify-center w-full" style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={endDrag} onPointerLeave={endDrag} >
+            <svg className="select-none w-full overflow-visible block aspect-[100/12] text-[6rem] font-bold uppercase leading-none" viewBox="0 0 1440 120">
                 <text ref={measureRef} xmlSpace="preserve" style={{ visibility: 'hidden', opacity: 0, pointerEvents: 'none' }}>
                     {text}
                 </text>

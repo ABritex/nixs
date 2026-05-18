@@ -1,16 +1,9 @@
-"use client";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
 import { encode } from "qss";
 import React from "react";
-import {
-    AnimatePresence,
-    motion,
-    useMotionValue,
-    useSpring,
-} from "framer-motion";
-
-import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, useMotionValue, useSpring, } from "framer-motion";
+import { cn } from "#/lib/utils";
 
 type LinkPreviewProps = {
     children: React.ReactNode;
@@ -18,8 +11,6 @@ type LinkPreviewProps = {
     className?: string;
     width?: number;
     height?: number;
-    quality?: number;
-    layout?: string;
 } & (
         | { isStatic: true; imageSrc: string }
         | { isStatic?: false; imageSrc?: never }
@@ -31,8 +22,6 @@ export const LinkPreview = ({
     className,
     width = 200,
     height = 125,
-    quality = 50,
-    layout = "fixed",
     isStatic = false,
     imageSrc = "",
 }: LinkPreviewProps) => {
@@ -67,10 +56,10 @@ export const LinkPreview = ({
 
     const translateX = useSpring(x, springConfig);
 
-    const handleMouseMove = (event: any) => {
-        const targetRect = event.target.getBoundingClientRect();
+    const handleMouseMove = (event: React.MouseEvent) => {
+        const targetRect = event.currentTarget.getBoundingClientRect();
         const eventOffsetX = event.clientX - targetRect.left;
-        const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2; // Reduce the effect to make it subtle
+        const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2;
         x.set(offsetFromCenter);
     };
 
@@ -82,7 +71,7 @@ export const LinkPreview = ({
                         src={src}
                         width={width}
                         height={height}
-                        alt="hidden image"
+                        alt=""
                     />
                 </div>
             ) : null}
@@ -96,7 +85,7 @@ export const LinkPreview = ({
             >
                 <HoverCardPrimitive.Trigger
                     onMouseMove={handleMouseMove}
-                    className={cn("text-white", className)}
+                    className={cn("text-foreground", className)}
                     href={url}
                 >
                     {children}
@@ -130,7 +119,7 @@ export const LinkPreview = ({
                             >
                                 <a
                                     href={url}
-                                    className="block p-1 bg-neutral-900 border-2 border-transparent shadow rounded-xl hover:border-neutral-800"
+                                    className="block p-1 bg-card border-2 border-transparent shadow rounded-xl hover:border-border/40"
                                     style={{ fontSize: 0 }}
                                 >
                                     <img

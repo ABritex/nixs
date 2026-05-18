@@ -8,8 +8,8 @@ export default function SectionDivider({ text = 'nicholas abeleda • fullstack 
                 speed={1.5}
                 curveAmount={300}
                 direction="left"
-                interactive
-                className="fill-muted-foreground/70"
+                interactive={false}
+                className="fill-white/10"
             />
         </div>
     )

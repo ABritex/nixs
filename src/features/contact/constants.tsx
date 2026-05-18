@@ -1,5 +1,5 @@
 import { Mail, MapPin, Clock, Terminal } from "lucide-react";
-import { PERSON } from "@/constants/personal";
+import { PERSON } from "#/constants/personal";
 
 export const CONTACT_LINKS = [
     {
@@ -31,10 +31,29 @@ export const CONTACT_LINKS = [
         href: "https://www.facebook.com/abeleda123/",
         iconClassName: "invert",
     },
+    {
+        label: "X (Twitter)",
+        icon: "/icons/twitter.svg",
+        href: "https://x.com/ABr1tex",
+        iconClassName: "invert",
+    },
+];
+
+export const SUPPORT_LINKS = [
+    {
+        label: "Ko-fi",
+        href: "https://ko-fi.com/abr1tex",
+        icon: "/icons/ko-fi.svg",
+    },
+    {
+        label: "Buy Me a Coffee",
+        href: "https://buymeacoffee.com/abritex",
+        icon: "/icons/buy-me-a-coffee.svg",
+    },
 ];
 
 export const META = [
-    { label: "Location", value: PERSON.location ?? "Philippines", icon: <MapPin size={12} />, color: "text-primary" },
+    { label: "Location", value: PERSON.location, icon: <MapPin size={12} />, color: "text-primary" },
     { label: "Response Time", value: "Within 24–48 hrs", icon: <Clock size={12} />, color: "text-accent" },
     { label: "Status", value: "Open to opportunities", icon: <Terminal size={12} />, color: "text-secondary" },
 ];

@@ -1,11 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import ShapeGrid from '@/components/shape-grid'
-import { PERSON } from '@/constants/personal'
+import { gsap, ScrollTrigger } from '#/lib/gsap'
+import { PERSON } from '#/constants/personal'
 import { SOCIALS } from '../constants'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export default function ContactSection() {
     const ref = useRef<HTMLDivElement>(null)
@@ -23,7 +19,7 @@ export default function ContactSection() {
     }, [])
 
     return (
-        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pointer-events-none"
             style={{ background: 'linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted) / 0.3), hsl(var(--background)))' }}
         >
             <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -31,10 +27,7 @@ export default function ContactSection() {
                     backgroundImage: 'radial-gradient(circle at 50% 30%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 50% 70%, hsl(var(--primary)) 0%, transparent 50%)',
                 }}
             />
-            <div className="absolute inset-0 pointer-events-none opacity-[0.07]">
-                <ShapeGrid speed={0.35} squareSize={28} borderColor="rgba(255,255,255,0.05)" shape="hexagon" direction="left" />
-            </div>
-            <div className="relative z-10 w-full max-w-3xl mx-auto text-center space-y-8 md:space-y-10">
+            <div className="relative z-10 w-full max-w-3xl mx-auto text-center space-y-8 md:space-y-10 pointer-events-auto">
                 <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
                     <span className="text-accent">$</span> contact
                 </p>
@@ -46,13 +39,13 @@ export default function ContactSection() {
                 </p>
                 <div className="scroll-reveal flex flex-col sm:flex-row items-center justify-center gap-4 pt-2" data-delay="300">
                     <a href={`mailto:${PERSON.email}`}
-                        className="px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all font-mono"
+                        className="cursor-target px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all font-mono"
                     >
                         {PERSON.email}
                     </a>
                     {SOCIALS.map((s) => (
                         <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
-                            className="text-sm text-muted-foreground/50 hover:text-foreground transition-colors font-mono"
+                            className="cursor-target text-sm text-muted-foreground/50 hover:text-foreground transition-colors font-mono"
                         >
                             {s.label}
                         </a>

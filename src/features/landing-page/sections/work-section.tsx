@@ -1,14 +1,10 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { gsap, ScrollTrigger } from '#/lib/gsap'
 import { AnimatePresence, motion } from 'framer-motion'
-import ShapeGrid from '@/components/shape-grid'
-import { PROJECTS } from '@/features/showcase/constants'
-import { Tooltip } from '@/components/ui/tooltip-card'
-import { LinkPreview } from '@/components/ui/link-preview'
-import { useOutsideClick } from '@/hooks/use-outside-click'
-
-gsap.registerPlugin(ScrollTrigger)
+import { PROJECTS } from '#/features/showcase/constants'
+import { Tooltip } from '#/components/ui/tooltip-card'
+import { LinkPreview } from '#/components/ui/link-preview'
+import { useOutsideClick } from '#/hooks/use-outside-click'
 
 const TECH_DESCRIPTIONS: Record<string, string> = {
     'Next.js': 'React framework with App Router, SSR, and RSC support',
@@ -76,18 +72,15 @@ export default function WorkSection() {
         return () => { document.body.style.overflow = '' }
     }, [active])
 
-    useOutsideClick(modalRef as React.RefObject<HTMLDivElement>, () => setActive(null))
+    useOutsideClick(modalRef, () => setActive(null))
 
     return (
-        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden bg-background">
+        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pointer-events-none">
             <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.03]"
                 style={{
                     backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--secondary)) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(var(--primary)) 0%, transparent 50%)',
                 }}
             />
-            <div className="absolute inset-0 pointer-events-none opacity-[0.06]">
-                <ShapeGrid speed={0.25} squareSize={40} borderColor="rgba(255,255,255,0.05)" shape="circle" direction="down" />
-            </div>
 
             <AnimatePresence>
                 {active && (
@@ -109,7 +102,7 @@ export default function WorkSection() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0, transition: { duration: 0.05 } }}
-                            className="fixed top-4 right-4 flex items-center justify-center bg-white rounded-full h-8 w-8 z-[110]"
+                            className="fixed top-4 right-4 flex items-center justify-center bg-background border border-border rounded-full h-8 w-8 z-[110] hover:bg-muted transition-colors"
                             onClick={() => setActive(null)}
                         >
                             <CloseIcon />
@@ -117,15 +110,16 @@ export default function WorkSection() {
                         <motion.div
                             layoutId={`card-${active.title}-${id}`}
                             ref={modalRef}
-                            className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-neutral-900 sm:rounded-3xl overflow-hidden"
+                            className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-card sm:rounded-3xl overflow-hidden border border-border/40"
                         >
                             <motion.div layoutId={`image-${active.title}-${id}`}>
                                 <img
                                     width={200}
                                     height={200}
                                     src={active.cover}
-                                    alt={active.title}
+                                    alt=""
                                     className="w-full h-64 lg:h-72 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
+                                    loading="lazy"
                                 />
                             </motion.div>
 
@@ -134,13 +128,13 @@ export default function WorkSection() {
                                     <div>
                                         <motion.h3
                                             layoutId={`title-${active.title}-${id}`}
-                                            className="font-medium text-neutral-200 text-base"
+                                            className="font-medium text-foreground text-base"
                                         >
                                             {active.title}
                                         </motion.h3>
                                         <motion.p
                                             layoutId={`desc-${active.title}-${id}`}
-                                            className="text-neutral-400 text-sm mt-1"
+                                            className="text-muted-foreground text-sm mt-1"
                                         >
                                             {active.period}
                                         </motion.p>
@@ -157,7 +151,7 @@ export default function WorkSection() {
                                                     href={active.liveUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="px-3 py-2 text-xs rounded-full font-bold bg-green-500 text-white hover:bg-green-600 transition-colors"
+                                                    className="px-3 py-2 text-xs rounded-full font-bold bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
                                                 >
                                                     Live
                                                 </motion.a>
@@ -172,7 +166,7 @@ export default function WorkSection() {
                                                 href={active.githubUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="px-3 py-2 text-xs rounded-full font-bold bg-neutral-800 text-white hover:bg-neutral-700 transition-colors"
+                                                className="px-3 py-2 text-xs rounded-full font-bold bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
                                             >
                                                 GitHub
                                             </motion.a>
@@ -185,7 +179,7 @@ export default function WorkSection() {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="text-neutral-400 text-sm leading-relaxed"
+                                        className="text-muted-foreground text-sm leading-relaxed"
                                     >
                                         {active.desc}
                                     </motion.p>
@@ -194,7 +188,7 @@ export default function WorkSection() {
                                             <Tooltip
                                                 key={t}
                                                 content={TECH_DESCRIPTIONS[t] || t}
-                                                containerClassName="text-neutral-400"
+                                                containerClassName="text-muted-foreground"
                                             >
                                                 <span className="text-[10px] font-mono px-2 py-1 bg-muted/30 border border-border/40 rounded cursor-default hover:border-accent/30 transition-colors">
                                                     {t}
@@ -209,7 +203,7 @@ export default function WorkSection() {
                 )}
             </AnimatePresence>
 
-            <div className="relative z-10 w-full max-w-6xl mx-auto space-y-10">
+            <div className="relative z-10 w-full max-w-6xl mx-auto space-y-10 pointer-events-auto">
                 <div className="text-center space-y-3">
                     <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
                         <span className="text-accent">$</span> projects
@@ -225,21 +219,22 @@ export default function WorkSection() {
                             layoutId={`card-${p.title}-${id}`}
                             key={p.title}
                             onClick={() => setActive(p)}
-                            className="scroll-reveal cursor-target p-4 flex flex-col hover:bg-neutral-800/50 rounded-xl cursor-pointer transition-colors"
+                            className="scroll-reveal cursor-target p-4 flex flex-col hover:bg-card/50 rounded-xl cursor-pointer transition-colors"
                             data-delay={200 + i * 100}
                         >
                             <div className="flex gap-4 flex-col w-full">
                                 <motion.div layoutId={`image-${p.title}-${id}`}>
                                     <div className="relative h-48 rounded-lg overflow-hidden bg-muted/20">
                                         <img
-                                            width={100}
-                                            height={100}
+                                            width={400}
+                                            height={192}
                                             src={p.cover}
-                                            alt={p.title}
+                                            alt=""
                                             className="h-full w-full object-cover object-top"
+                                            loading="lazy"
                                         />
                                         {p.liveUrl && (
-                                            <span className="absolute top-2 right-2 text-[9px] font-mono px-1.5 py-0.5 rounded bg-secondary/80 text-secondary-foreground border border-secondary/40">
+                                            <span className="absolute top-2 right-2 text-xs font-mono px-1.5 py-0.5 rounded bg-secondary/80 text-secondary-foreground border border-secondary/40">
                                                 live
                                             </span>
                                         )}
@@ -248,13 +243,13 @@ export default function WorkSection() {
                                 <div className="flex justify-center items-center flex-col">
                                     <motion.h3
                                         layoutId={`title-${p.title}-${id}`}
-                                        className="font-medium text-neutral-200 text-center text-base"
+                                        className="font-medium text-foreground text-center text-base"
                                     >
                                         {p.title}
                                     </motion.h3>
                                     <motion.p
                                         layoutId={`desc-${p.title}-${id}`}
-                                        className="text-neutral-400 text-center text-xs mt-1 line-clamp-2"
+                                        className="text-muted-foreground text-center text-xs mt-1 line-clamp-2"
                                     >
                                         {p.desc}
                                     </motion.p>
@@ -290,7 +285,7 @@ function CloseIcon() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-4 w-4 text-black"
+            className="h-4 w-4 text-foreground"
         >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M18 6l-12 12" />

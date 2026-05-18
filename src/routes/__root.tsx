@@ -1,15 +1,13 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 import appCss from '../styles.css?url'
 import { Providers } from '#/components/providers'
 import { cn } from '#/lib/utils'
 import Footer from '#/components/footer'
-import Header from '@/components/header'
-import { AOSInit } from '@/components/AosInit';
-import TargetCursor from '@/components/ui/target-cursor';
-import { SmoothScroll } from '#/components/smooth-scroll';
-import { ScrollReveal } from '#/components/scroll-reveal';
+import Header from '#/components/header'
+import { SmoothScroll } from '#/components/smooth-scroll'
+import { ScrollReveal } from '#/components/scroll-reveal'
+import ShapeGrid from '#/components/shape-grid'
+import TargetCursor from '#/components/ui/target-cursor'
 
 export const Route = createRootRoute({
     head: () => ({
@@ -22,7 +20,7 @@ export const Route = createRootRoute({
                 content: 'width=device-width, initial-scale=1',
             },
             {
-                title: 'Nicholas Abeleda | OJT PORTFOLIO',
+                title: 'Nicholas Abeleda | PORTFOLIO',
             },
             {
                 name: 'description',
@@ -30,7 +28,7 @@ export const Route = createRootRoute({
             },
             {
                 property: 'og:title',
-                content: 'Nicholas Abeleda | OJT PORTFOLIO',
+                content: 'Nicholas Abeleda PORTFOLIO',
             },
             {
                 property: 'og:description',
@@ -38,7 +36,7 @@ export const Route = createRootRoute({
             },
             {
                 property: 'og:url',
-                content: 'https://e-portfolio-nics.vercel.app',
+                content: 'https://nixs-portfolio.vercel.app/',
             },
             {
                 property: 'og:site_name',
@@ -58,7 +56,7 @@ export const Route = createRootRoute({
             },
             {
                 property: 'og:image:alt',
-                content: 'Nicholas Abeleda OJT Portfolio',
+                content: 'Nicholas Abeleda Portfolio',
             },
             {
                 property: 'og:locale',
@@ -74,7 +72,7 @@ export const Route = createRootRoute({
             },
             {
                 name: 'twitter:title',
-                content: 'Nicholas Abeleda | OJT PORTFOLIO',
+                content: 'Nicholas Abeleda | PORTFOLIO',
             },
             {
                 name: 'twitter:description',
@@ -82,7 +80,7 @@ export const Route = createRootRoute({
             },
             {
                 name: 'twitter:image',
-                content: '/images/background.png',
+                content: '/images/bg.png',
             },
         ],
         links: [
@@ -108,27 +106,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     parallaxOn
                     hoverDuration={0.2}
                 />
+                <div className="fixed inset-0 z-0">
+                    <ShapeGrid speed={0.3} squareSize={40} borderColor="rgba(255,255,255,0.03)" shape="square" direction="diagonal" hoverTrailAmount={5} hoverFillColor="rgba(255,255,255,0.03)" />
+                </div>
+                <SmoothScroll />
+                <ScrollReveal />
                 <Providers>
-                    <SmoothScroll />
-                    <ScrollReveal />
                     <Header />
                     <main className="pt-16">
-                      {children}
+                        {children}
                     </main>
                     <Footer />
-                    <AOSInit />
-
-                    <TanStackDevtools
-                        config={{
-                            position: 'bottom-right',
-                        }}
-                        plugins={[
-                            {
-                                name: 'Tanstack Router',
-                                render: <TanStackRouterDevtoolsPanel />,
-                            },
-                        ]}
-                    />
                     <Scripts />
                 </Providers>
             </body>

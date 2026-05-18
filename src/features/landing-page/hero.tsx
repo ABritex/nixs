@@ -3,7 +3,6 @@ import HeroSection from './sections/hero-section'
 import SectionDivider from './components/section-divider'
 
 const TimelineSection = lazy(() => import('./sections/timeline-section'))
-const SkillsSection = lazy(() => import('./sections/skills-section'))
 const WorkSection = lazy(() => import('./sections/work-section'))
 const ContactSection = lazy(() => import('./sections/contact-section'))
 
@@ -14,10 +13,6 @@ export default function Hero() {
             <SectionDivider />
             <Suspense fallback={<SectionSkeleton />}>
                 <TimelineSection />
-            </Suspense>
-            <SectionDivider text="tech stack • tools • systems" />
-            <Suspense fallback={<SectionSkeleton />}>
-                <SkillsSection />
             </Suspense>
             <SectionDivider text="projects • builds • open source" />
             <Suspense fallback={<SectionSkeleton />}>

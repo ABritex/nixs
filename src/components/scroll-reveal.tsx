@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect } from 'react';
 
 export function ScrollReveal() {
@@ -18,10 +16,23 @@ export function ScrollReveal() {
             }
         );
 
-        const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
-        elements.forEach((el) => observer.observe(el));
+        const observeAll = () => {
+            const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+            elements.forEach((el) => observer.observe(el));
+        };
 
-        return () => observer.disconnect();
+        observeAll();
+
+        const mutationObserver = new MutationObserver(() => {
+            observeAll();
+        });
+
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+        return () => {
+            observer.disconnect();
+            mutationObserver.disconnect();
+        };
     }, []);
 
     return null;

@@ -1,7 +1,6 @@
-"use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "#/lib/utils";
 
 export const Tooltip = ({
     content,
@@ -32,39 +31,32 @@ export const Tooltip = ({
         if (!contentRef.current || !containerRef.current)
             return { x: mouseX + 12, y: mouseY + 12 };
 
-        const tooltip = contentRef.current;
         const container = containerRef.current;
         const containerRect = container.getBoundingClientRect();
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        // Get tooltip dimensions
-        const tooltipWidth = 240; // min-w-[15rem] = 240px
-        const tooltipHeight = tooltip.scrollHeight;
+        const tooltipWidth = 240;
+        const tooltipHeight = contentRef.current.scrollHeight;
 
-        // Calculate absolute position relative to viewport
         const absoluteX = containerRect.left + mouseX;
         const absoluteY = containerRect.top + mouseY;
 
         let finalX = mouseX + 12;
         let finalY = mouseY + 12;
 
-        // Check if tooltip goes beyond right edge
         if (absoluteX + 12 + tooltipWidth > viewportWidth) {
             finalX = mouseX - tooltipWidth - 12;
         }
 
-        // Check if tooltip goes beyond left edge
         if (absoluteX + finalX < 0) {
             finalX = -containerRect.left + 12;
         }
 
-        // Check if tooltip goes beyond bottom edge
         if (absoluteY + 12 + tooltipHeight > viewportHeight) {
             finalY = mouseY - tooltipHeight - 12;
         }
 
-        // Check if tooltip goes beyond top edge
         if (absoluteY + finalY < 0) {
             finalY = -containerRect.top + 12;
         }
@@ -100,43 +92,6 @@ export const Tooltip = ({
         updateMousePosition(mouseX, mouseY);
     };
 
-    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        const touch = e.touches[0];
-        const rect = e.currentTarget.getBoundingClientRect();
-        const mouseX = touch.clientX - rect.left;
-        const mouseY = touch.clientY - rect.top;
-        updateMousePosition(mouseX, mouseY);
-        setIsVisible(true);
-    };
-
-    const handleTouchEnd = () => {
-        // Delay hiding to allow for tap interaction
-        setTimeout(() => {
-            setIsVisible(false);
-            setMouse({ x: 0, y: 0 });
-            setPosition({ x: 0, y: 0 });
-        }, 2000);
-    };
-
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        // Toggle visibility on click for mobile devices
-        if (window.matchMedia("(hover: none)").matches) {
-            e.preventDefault();
-            if (isVisible) {
-                setIsVisible(false);
-                setMouse({ x: 0, y: 0 });
-                setPosition({ x: 0, y: 0 });
-            } else {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                updateMousePosition(mouseX, mouseY);
-                setIsVisible(true);
-            }
-        }
-    };
-
-    // Update position when tooltip becomes visible or content changes
     useEffect(() => {
         if (isVisible && contentRef.current) {
             const newPosition = calculatePosition(mouse.x, mouse.y);
@@ -151,9 +106,6 @@ export const Tooltip = ({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onClick={handleClick}
         >
             {children}
             <AnimatePresence>
@@ -168,7 +120,7 @@ export const Tooltip = ({
                             stiffness: 200,
                             damping: 20,
                         }}
-                        className="pointer-events-none absolute z-50 min-w-[15rem] overflow-hidden rounded-md border border-transparent bg-neutral-900 shadow-sm ring-1 shadow-white/10 ring-white/5"
+                        className="pointer-events-none absolute z-50 min-w-[15rem] overflow-hidden rounded-md border border-border/40 bg-card shadow-sm"
                         style={{
                             top: position.y,
                             left: position.x,
@@ -176,7 +128,7 @@ export const Tooltip = ({
                     >
                         <div
                             ref={contentRef}
-                            className="p-2 text-sm text-neutral-400 md:p-4"
+                            className="p-2 text-sm text-muted-foreground md:p-4"
                         >
                             {content}
                         </div>

@@ -25,7 +25,7 @@ export default function Header() {
               key={label}
               to={href}
               activeProps={{ className: 'bg-muted/60 text-foreground' }}
-              className="flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-lg transition-colors hover:bg-muted/40 no-underline"
+              className="cursor-target flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-lg transition-colors hover:bg-muted/40 no-underline"
             >
               <span className="text-accent/50">$</span>
               {cmd}

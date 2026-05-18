@@ -1,6 +1,3 @@
-import { SectionHeader, Divider } from "@/components/terminal";
-import { Star } from "lucide-react";
-import ShapeGrid from "@/components/shape-grid";
 import { PROJECTS } from "./constants";
 
 export function Achievements() {
@@ -13,31 +10,27 @@ export function Achievements() {
     });
 
     return (
-        <section id="projects" className="relative w-full flex flex-col gap-12 overflow-hidden">
+        <section id="projects" className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden pointer-events-none">
             <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
                 style={{
                     backgroundImage: 'radial-gradient(circle at 50% 30%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 50% 70%, hsl(var(--primary)) 0%, transparent 50%)',
                 }}
             />
-            <div className="absolute inset-0 pointer-events-none opacity-[0.05]">
-                <ShapeGrid speed={0.3} squareSize={36} borderColor="rgba(255,255,255,0.04)" shape="square" direction="up" />
-            </div>
-            <div className="relative z-10">
-                <SectionHeader
-                    subtitle={
-                        <>
-                            Not a demo collector — a{" "}
-                            <span className="text-foreground font-semibold">ship-first craftsman</span>.
-                            Every project here is live, used, and actively maintained.
-                        </>
-                    }
-                    title={<>Featured<br />Projects.</>}
-                    note="From schema to deploy — built iteratively, shipped quietly. No tutorials, just production code."
-                />
 
-                <Divider iconClassName="text-secondary"><Star /></Divider>
+            <div className="relative z-10 w-full max-w-4xl mx-auto space-y-10 pointer-events-auto">
+                <div className="text-center space-y-3">
+                    <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
+                        <span className="text-accent">$</span> projects
+                    </p>
+                    <h2 className="scroll-reveal text-[clamp(28px,5vw,56px)] font-black leading-[1.05] tracking-tight text-foreground" data-delay="100">
+                        Featured Projects
+                    </h2>
+                    <p className="scroll-reveal text-sm text-muted-foreground/70 leading-relaxed max-w-lg mx-auto font-mono" data-delay="200">
+                        Projects I&apos;ve built — some live, some in progress, all real.
+                    </p>
+                </div>
 
-                <div data-aos="fade-up" className="flex items-center gap-2">
+                <div className="scroll-reveal flex items-center justify-center gap-2" data-delay="250">
                     <span className="font-mono text-[11px] text-muted-foreground/50 bg-muted/30 border border-border/40 rounded px-2 py-0.5">
                         ~/projects $ git log --all
                     </span>
@@ -53,30 +46,36 @@ export function Achievements() {
                         return (
                             <div key={p.title}>
                                 {showYear && (
-                                    <div data-aos="fade-up" className="flex items-center gap-2 mb-4 font-mono text-[11px] text-muted-foreground/40">
+                                    <div className="scroll-reveal flex items-center gap-2 mb-4 font-mono text-[11px] text-muted-foreground/40" data-delay={300 + i * 50}>
                                         <span className="w-4 h-px bg-border/50 inline-block" />
                                         {p.period}
                                     </div>
                                 )}
 
-                                <div data-aos="fade-up" className={`relative ${marginBottom}`}>
+                                <div className={`relative ${marginBottom}`}>
                                     <div className={`absolute -left-[24px] top-5 w-3.5 h-3.5 rounded-full border-2 border-card ${p.dot} z-10`} />
 
-                                    <div className="bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300">
+                                    <div className="scroll-reveal-scale bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300" data-delay={350 + i * 100}>
                                         <div className="relative w-full h-36 bg-muted/20">
                                             {p.cover && (
                                                 <img
                                                     src={p.cover}
-                                                    alt={`${p.title} cover`}
+                                                    alt=""
                                                     className="object-cover absolute inset-0 w-full h-full"
+                                                    width={400}
+                                                    height={144}
+                                                    loading="lazy"
                                                 />
                                             )}
                                             <div className="absolute bottom-3 left-3 w-9 h-9 rounded-lg bg-card border border-border/60 overflow-hidden flex items-center justify-center shadow-sm">
                                                 {p.logo ? (
                                                     <img
                                                         src={p.logo}
-                                                        alt={`${p.title} logo`}
+                                                        alt=""
                                                         className="object-contain w-full h-full"
+                                                        width={36}
+                                                        height={36}
+                                                        loading="lazy"
                                                     />
                                                 ) : (
                                                     <span className="text-lg">{p.fallbackIcon}</span>
@@ -89,7 +88,7 @@ export function Achievements() {
                                                     </span>
                                                 )}
                                                 {!p.status && p.liveUrl && (
-                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#E1F5EE] text-[#0F6E56] border border-[#5DCAA5]">
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-secondary/20 text-secondary-foreground border border-secondary/40">
                                                         ● live
                                                     </span>
                                                 )}
@@ -123,16 +122,16 @@ export function Achievements() {
                                             <div className="flex gap-2">
                                                 {p.status !== "postponed" && p.liveUrl && (
                                                     <a href={p.liveUrl} target="_blank" rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-md bg-[#E1F5EE] text-[#0F6E56] border border-[#5DCAA5] hover:opacity-80 transition-opacity"
+                                                        className="cursor-target inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-md bg-secondary/20 text-secondary-foreground border border-secondary/40 hover:opacity-80 transition-opacity"
                                                     >
                                                         ↗ View live
                                                     </a>
                                                 )}
                                                 {p.githubUrl && (
                                                     <a href={p.githubUrl} target="_blank" rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-md bg-muted/30 text-muted-foreground border border-border/40 hover:border-border hover:text-foreground transition-all"
+                                                        className="cursor-target inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-md bg-muted/30 text-muted-foreground border border-border/40 hover:border-border hover:text-foreground transition-all"
                                                     >
-                                                        <img src="/icons/github.svg" alt="GitHub" className="w-3 h-3 invert" />
+                                                        <img src="/icons/github.svg" alt="" className="w-3 h-3 invert" width={12} height={12} loading="lazy" />
                                                         GitHub
                                                     </a>
                                                 )}

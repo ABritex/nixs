@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
-import { gsap } from 'gsap';
+import { gsap } from '#/lib/gsap';
 
-export interface TargetCursorProps {
+interface TargetCursorProps {
     targetSelector?: string;
     spinDuration?: number;
     hideDefaultCursor?: boolean;
@@ -33,7 +33,8 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
         const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
         const isMobileUserAgent = mobileRegex.test(userAgent.toLowerCase());
-        return (hasTouchScreen && isSmallScreen) || isMobileUserAgent;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        return (hasTouchScreen && isSmallScreen) || isMobileUserAgent || prefersReducedMotion;
     }, []);
 
     const constants = useMemo(() => ({ borderWidth: 3, cornerSize: 12 }), []);
@@ -154,7 +155,8 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
                 }
                 current = current.parentElement;
             }
-            const target = allTargets[0] || null;
+            const target = allTargets[0];
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (!target || !cursorRef.current || !cornersRef.current) return;
             if (activeTarget === target) return;
             if (activeTarget) {
@@ -205,17 +207,17 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
                 gsap.set(activeStrengthRef.current, { current: 0, overwrite: true });
                 activeTarget = null;
                 if (cornersRef.current) {
-                    const corners = Array.from(cornersRef.current);
-                    gsap.killTweensOf(corners);
-                    const { cornerSize } = constants;
+                    const leaveCorners = Array.from(cornersRef.current);
+                    gsap.killTweensOf(leaveCorners);
+                    const { cornerSize: leaveCornerSize } = constants;
                     const positions = [
-                        { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
-                        { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
-                        { x: cornerSize * 0.5, y: cornerSize * 0.5 },
-                        { x: -cornerSize * 1.5, y: cornerSize * 0.5 }
+                        { x: -leaveCornerSize * 1.5, y: -leaveCornerSize * 1.5 },
+                        { x: leaveCornerSize * 0.5, y: -leaveCornerSize * 1.5 },
+                        { x: leaveCornerSize * 0.5, y: leaveCornerSize * 0.5 },
+                        { x: -leaveCornerSize * 1.5, y: leaveCornerSize * 0.5 }
                     ];
                     const tl = gsap.timeline();
-                    corners.forEach((corner, index) => {
+                    leaveCorners.forEach((corner, index) => {
                         tl.to(corner, { x: positions[index].x, y: positions[index].y, duration: 0.3, ease: 'power3.out' }, 0);
                     });
                 }

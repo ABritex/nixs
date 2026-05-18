@@ -1,9 +1,14 @@
-"use client";
 import { useState, useEffect } from "react";
+
+const LEVEL_WIDTHS: Record<string, number> = {
+    Expert: 100,
+    Proficient: 75,
+    Familiar: 50,
+};
 
 type SkillBarProps = {
     name: string;
-    level: number;
+    level: string;
     note: string;
     colorClass: string;
     activeId: string;
@@ -16,7 +21,7 @@ export function SkillBar({ name, level, note, colorClass, activeId, icon, iconCl
     const [width, setWidth] = useState(0);
 
     useEffect(() => {
-        const timer = setTimeout(() => setWidth(level), 50);
+        const timer = setTimeout(() => setWidth(LEVEL_WIDTHS[level] ?? 50), 50);
         return () => clearTimeout(timer);
     }, [level, activeId]);
 
@@ -31,18 +36,21 @@ export function SkillBar({ name, level, note, colorClass, activeId, icon, iconCl
                     {icon && (
                         <img
                             src={icon}
-                            alt={name}
+                            alt=""
                             className={`flex-shrink-0 object-contain w-4 h-4 ${iconClassName ?? ''}`}
+                            width={16}
+                            height={16}
+                            loading="lazy"
                         />
                     )}
-                    <span className="text-[12px] text-foreground">{name}</span>
+                    <span className="text-sm text-foreground">{name}</span>
                     {hovered && (
-                        <span className="text-[10px] text-muted-foreground animate-in fade-in duration-150">
+                        <span className="text-xs text-muted-foreground animate-in fade-in duration-150">
                             — {note}
                         </span>
                     )}
                 </div>
-                <span className={`text-[10px] tabular-nums font-bold ${colorClass}`}>{level}%</span>
+                <span className={`text-xs tabular-nums font-bold ${colorClass}`}>{level}</span>
             </div>
             <div className="w-full h-[3px] bg-border rounded-full overflow-hidden">
                 <div
