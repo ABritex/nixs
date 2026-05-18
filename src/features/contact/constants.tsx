@@ -33,7 +33,7 @@ export const CONTACT_LINKS = [
     },
     {
         label: "X (Twitter)",
-        icon: "/icons/twitter.svg",
+        icon: "/icons/x.svg",
         href: "https://x.com/ABr1tex",
         iconClassName: "invert",
     },

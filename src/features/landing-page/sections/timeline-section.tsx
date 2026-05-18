@@ -8,20 +8,20 @@ function TimelineCard({ entry }: { entry: { year: string; title: string; desc: s
     return (
         <div className="rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-5 hover:bg-card/80 transition-all">
             <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted/50">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted/30 border border-border/30 overflow-hidden">
                     <img
                         src={entry.icon}
                         alt=""
-                        className="h-5 w-5 invert"
-                        width={20}
-                        height={20}
+                        className="h-full w-full object-cover rounded-full"
+                        width={48}
+                        height={48}
                         loading="lazy"
                     />
                 </div>
                 <div className="flex-1 space-y-1">
-                    <p className="text-[10px] font-mono text-muted-foreground/50">{entry.year}</p>
+                    <p className="text-xs font-mono text-muted-foreground/50">{entry.year}</p>
                     <p className="text-sm font-bold text-foreground">{entry.title}</p>
-                    <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{entry.desc}</p>
+                    <p className="text-xs text-muted-foreground/70 leading-relaxed">{entry.desc}</p>
                     <div className="flex flex-wrap gap-1.5 pt-2">
                         {entry.tags.map((t) => (
                             <span key={t} className="text-xs font-mono px-2 py-0.5 bg-muted/30 border border-border/40 rounded text-muted-foreground/60">
