@@ -8,7 +8,7 @@ function TimelineCard({ entry }: { entry: { year: string; title: string; desc: s
         <div className="rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-5 hover:bg-card/80 transition-all">
             <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted/30 border border-border/30 overflow-hidden">
-                    <img src={entry.icon} alt="" className="h-full w-full object-cover rounded-full" width={48} height={48} loading="lazy" />
+                    <img src={entry.icon} alt="" className="h-full w-full object-cover rounded-full" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div className="flex-1 space-y-1">
                     <p className="text-xs font-mono text-muted-foreground/50">{entry.year}</p>

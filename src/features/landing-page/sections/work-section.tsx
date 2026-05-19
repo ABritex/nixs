@@ -181,12 +181,12 @@ export default function WorkSection() {
                 <div className="scroll-reveal flex items-center justify-center gap-4 text-[10px] font-mono" data-delay="400">
                     <p className="text-muted-foreground/30">
                         <span className="text-accent/40">▸</span> more projects on{' '}
-                        <a href="https://github.com/ABritex" target="_blank" rel="noopener noreferrer" className="text-accent/60 hover:text-accent underline underline-offset-2 transition-colors">
+                        <a href="https://github.com/ABritex" target="_blank" rel="noopener noreferrer" className="cursor-target text-accent/60 hover:text-accent underline underline-offset-2 transition-colors">
                             GitHub
                         </a>
                     </p>
-                    <a href="/show-case" className="px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-all">
-                        more →
+                    <a href="/show-case" className="cursor-target px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-all">
+                        more on →
                     </a>
                 </div>
             </div>

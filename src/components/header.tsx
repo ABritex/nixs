@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const NAV_ITEMS = [
   { label: 'Home', cmd: '~/', href: '/' },
@@ -35,28 +36,55 @@ export default function Header() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-lg border border-border/40 bg-card/50"
+          className="md:hidden cursor-target flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-lg border border-border/40 bg-card/50 transition-colors"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
         >
-          <span className="text-accent">$</span> menu
+          <span className="text-accent">$</span>
+          <div className="w-4 h-3 flex flex-col justify-between">
+            <motion.span
+              animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="block w-full h-0.5 bg-current origin-center"
+            />
+            <motion.span
+              animate={open ? { opacity: 0, x: -4 } : { opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className="block w-full h-0.5 bg-current"
+            />
+            <motion.span
+              animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="block w-full h-0.5 bg-current origin-center"
+            />
+          </div>
         </button>
       </div>
 
-      {open && (
-        <div className="md:hidden mt-2 rounded-2xl border border-border/60 bg-card/95 backdrop-blur-xl px-4 py-3 flex flex-col gap-1">
-          {NAV_ITEMS.map(({ label, cmd, href }) => (
-            <Link
-              key={label}
-              to={href}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors no-underline"
-            >
-              <span className="text-accent/50">$</span>
-              {cmd}
-              <span className="text-muted-foreground/30 ml-auto">{label}</span>
-            </Link>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="md:hidden mt-2 rounded-2xl border border-border/60 bg-card/95 backdrop-blur-xl px-4 py-3 flex flex-col gap-1"
+          >
+            {NAV_ITEMS.map(({ label, cmd, href }) => (
+              <Link
+                key={label}
+                to={href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors no-underline"
+              >
+                <span className="text-accent/50">$</span>
+                {cmd}
+                <span className="text-muted-foreground/30 ml-auto">{label}</span>
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

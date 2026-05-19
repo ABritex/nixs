@@ -1,24 +1,29 @@
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "@emailjs/browser";
-import { Send, CheckCircle2, XCircle, Clock } from "lucide-react";
-import { CONTACT_LINKS, SUPPORT_LINKS, META, COLOR } from "./constants";
+import { META, CONTACT_COOLDOWN_MS, CONTACT_COOLDOWN_STORAGE_KEY } from "./constants";
 import { env } from "#/routes/-env";
 import Field from "./components/field";
 import { delay } from "./components/delay";
-
-const COOLDOWN_MS = 2 * 60 * 1000;
-const STORAGE_KEY = "contact_cooldown";
+import TerminalLog from "./components/terminal-log";
+import ContactSidebar from "./components/sidebar";
 
 type FormState = "idle" | "loading" | "success" | "error" | "cooldown";
 
+interface FormData {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+}
+
 export default function Contact() {
-    const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+    const [form, setForm] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
     const [state, setState] = useState<FormState>("idle");
     const [lines, setLines] = useState<string[]>([]);
     const [remaining, setRemaining] = useState(0);
 
     const getCooldownEnd = useCallback((): number => {
-        const stored = localStorage.getItem(STORAGE_KEY);
+        const stored = localStorage.getItem(CONTACT_COOLDOWN_STORAGE_KEY);
         return stored ? parseInt(stored, 10) : 0;
     }, []);
 
@@ -39,7 +44,7 @@ export default function Contact() {
             if (left <= 0) {
                 setRemaining(0);
                 setState("idle");
-                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(CONTACT_COOLDOWN_STORAGE_KEY);
                 clearInterval(interval);
             } else {
                 setRemaining(left);
@@ -48,8 +53,9 @@ export default function Contact() {
         return () => clearInterval(interval);
     }, [state, remaining, getCooldownEnd]);
 
-    const pushLine = (line: string) =>
+    const pushLine = useCallback((line: string) => {
         setLines((prev) => [...prev, line]);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -88,9 +94,9 @@ export default function Contact() {
             setState("success");
             setForm({ name: "", email: "", subject: "", message: "" });
 
-            const newCooldownEnd = Date.now() + COOLDOWN_MS;
-            localStorage.setItem(STORAGE_KEY, newCooldownEnd.toString());
-            setRemaining(COOLDOWN_MS);
+            const newCooldownEnd = Date.now() + CONTACT_COOLDOWN_MS;
+            localStorage.setItem(CONTACT_COOLDOWN_STORAGE_KEY, newCooldownEnd.toString());
+            setRemaining(CONTACT_COOLDOWN_MS);
             setTimeout(() => setState("cooldown"), 3000);
         } catch (err) {
             console.error("EmailJS error:", err);
@@ -98,12 +104,6 @@ export default function Contact() {
             setState("error");
         }
     };
-
-    const isLoading = state === "loading";
-    const isCooldown = state === "cooldown";
-    const minutes = Math.floor(remaining / 60000);
-    const seconds = Math.floor((remaining % 60000) / 1000);
-    const cooldownLabel = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
     return (
         <section id="contact" className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden pointer-events-none">
@@ -165,150 +165,12 @@ export default function Contact() {
                                     <textarea placeholder="Write your message here..." value={form.message} required rows={6} onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))} className="cursor-target w-full rounded-xl border border-border/40 bg-background/50 px-4 py-3 text-[13px] text-foreground placeholder:text-muted-foreground/30 outline-none resize-none focus:ring-2 focus:ring-primary/30 focus:border-primary/60 transition-all duration-150" />
                                 </div>
 
-                                {lines.length > 0 && (
-                                    <div className="rounded-xl border border-border/40 bg-background/70 px-5 py-4 flex flex-col gap-1 font-mono text-[11px]">
-                                        {lines.map((line, i) => (
-                                            <p key={i}
-                                                className={
-                                                    line.startsWith("✓") ? "text-secondary"
-                                                        : line.startsWith("✗") ? "text-destructive"
-                                                            : line.startsWith("$") ? "text-primary"
-                                                                : "text-muted-foreground/60"
-                                                }
-                                            >
-                                                {line}
-                                            </p>
-                                        ))}
-                                        {isLoading && (
-                                            <span className="inline-block w-2 h-3 bg-primary animate-pulse rounded-sm" />
-                                        )}
-                                    </div>
-                                )}
-
-                                <div className="flex items-center gap-4">
-                                    <button type="submit" disabled={isLoading || isCooldown} className="cursor-target group flex items-center gap-2.5 rounded-xl bg-primary/10 border border-primary/30 hover:bg-primary/20 hover:border-primary/60 px-6 py-3 text-[13px] font-semibold text-primary transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-                                        {isLoading ? (
-                                            <>
-                                                <span className="w-3.5 h-3.5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                                                Sending...
-                                            </>
-                                        ) : isCooldown ? (
-                                            <>
-                                                <Clock size={14} />
-                                                {cooldownLabel}
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Send size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150" />
-                                                Send Message
-                                            </>
-                                        )}
-                                    </button>
-
-                                    {state === "success" && (
-                                        <div className="flex items-center gap-1.5 text-[12px] text-secondary">
-                                            <CheckCircle2 size={14} />
-                                            Message sent!
-                                        </div>
-                                    )}
-                                    {state === "error" && (
-                                        <div className="flex items-center gap-1.5 text-[12px] text-destructive">
-                                            <XCircle size={14} />
-                                            Something went wrong.
-                                        </div>
-                                    )}
-                                    {isCooldown && (
-                                        <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-                                            <Clock size={14} />
-                                            Cooldown active
-                                        </div>
-                                    )}
-                                </div>
+                                <TerminalLog lines={lines} state={state} remaining={remaining} />
                             </form>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4">
-                        <div className="scroll-reveal-right space-y-3" data-delay="350">
-                            <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase font-mono">
-                                <span className="text-accent">$</span> curl --socials
-                            </p>
-                            {CONTACT_LINKS.map((link) => {
-                                const c = link.color ? COLOR[link.color] : COLOR.primary;
-                                const isSvgIcon = typeof link.icon === "string";
-                                return (
-                                    <a key={link.label}
-                                        href={link.href}
-                                        target={link.href.startsWith("http") ? "_blank" : undefined}
-                                        rel="noopener noreferrer"
-                                        className={`cursor-target group flex flex-col gap-3 rounded-xl border border-border/40 bg-card/50 px-5 py-4 ${c.hoverBorder} hover:bg-card/70 transition-all duration-150`}
-                                    >
-                                        <div className="flex items-center gap-2.5">
-                                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${c.bg}`}>
-                                                {isSvgIcon ? (
-                                                    <img src={link.icon as string} alt="" className={`w-4 h-4 ${link.iconClassName ?? ''}`} width={16} height={16} loading="lazy" />
-                                                ) : (
-                                                    <span className={c.text}>{link.icon}</span>
-                                                )}
-                                            </div>
-                                            <span className={`text-[10px] font-bold tracking-[.2em] uppercase ${c.text}`}>
-                                                {link.label}
-                                            </span>
-                                        </div>
-                                        {link.command && link.value && (
-                                            <div className="flex flex-col gap-0.5 pl-9">
-                                                <span className="text-[10px] text-muted-foreground/30 font-mono">$ {link.command}</span>
-                                                <span className={`text-[12px] font-semibold ${c.text} group-hover:underline underline-offset-2`}>
-                                                    {link.value}
-                                                </span>
-                                            </div>
-                                        )}
-                                    </a>
-                                );
-                            })}
-                        </div>
-
-                        <div className="scroll-reveal-right" data-delay="400">
-                            <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase font-mono mb-3">
-                                <span className="text-accent">$</span> support
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                {SUPPORT_LINKS.map((link) => (
-                                    <a key={link.label}
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="cursor-target flex items-center gap-2 rounded-xl border border-border/40 bg-card/50 px-4 py-3 hover:bg-card/70 transition-all"
-                                    >
-                                        <img src={link.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" />
-                                        <span className="text-[11px] font-semibold text-foreground">{link.label}</span>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="scroll-reveal-right rounded-xl border border-border/40 bg-card/50 px-5 py-5 flex flex-col gap-3" data-delay="450">
-                            <div className="flex items-center gap-2">
-                                <span className="relative flex w-2 h-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-60" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
-                                </span>
-                                <span className="text-[10px] font-bold tracking-[.2em] uppercase text-secondary">
-                                    Available
-                                </span>
-                            </div>
-                            <p className="text-[12px] text-muted-foreground leading-relaxed">
-                                Currently open to{" "}
-                                <span className="text-foreground font-semibold">internship roles</span>,{" "}
-                                <span className="text-foreground font-semibold">freelance projects</span>, and{" "}
-                                <span className="text-foreground font-semibold">entry-level positions</span>.
-                            </p>
-                            <p className="text-[10px] text-muted-foreground/30 font-mono border-t border-border/40 pt-3">
-                                $ status --check<br />
-                                <span className="text-secondary">▸ open_to_work: true</span>
-                            </p>
-                        </div>
-                    </div>
+                    <ContactSidebar />
                 </div>
             </div>
         </section>

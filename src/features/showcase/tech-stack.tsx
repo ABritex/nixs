@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { TECH_CATEGORIES } from "./constants";
-import { SkillBar } from "./skill-bar";
-import { Code, Server, Container } from "lucide-react";
+import { Code, Server, Container, Braces } from "lucide-react";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
     frontend: <Code className="w-3.5 h-3.5" />,
     backend: <Server className="w-3.5 h-3.5" />,
     devops: <Container className="w-3.5 h-3.5" />,
+    languages: <Braces className="w-3.5 h-3.5" />,
 };
 
 export function TechStack() {
@@ -14,7 +14,7 @@ export function TechStack() {
     const active = TECH_CATEGORIES.find((c) => c.id === activeId)!;
 
     return (
-        <section id="tech-stack" className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden pointer-events-none">
+        <section id="tech-stack" className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden pointer-events-none" style={{ contentVisibility: 'auto' }}>
             <div className="pointer-events-none absolute inset-0 opacity-[0.04]"
                 style={{
                     backgroundImage: 'radial-gradient(circle at 30% 20%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(circle at 70% 80%, hsl(var(--accent)) 0%, transparent 50%)',
@@ -48,7 +48,7 @@ export function TechStack() {
                         </div>
 
                         <div className="p-6 flex flex-col gap-6">
-                            <div className="flex items-center gap-2 flex-wrap cursor-target">
+                            <div className="flex items-center gap-2 flex-wrap">
                                 {TECH_CATEGORIES.map((cat) => (
                                     <button
                                         key={cat.id}
@@ -68,10 +68,10 @@ export function TechStack() {
 
                             <div className="flex flex-col gap-4">
                                 <p className="text-[10px] text-muted-foreground/40 tracking-widest uppercase">
-                                    hover a skill to see details
+                                    hover a skill to see context
                                 </p>
                                 {active.techs.map((tech) => (
-                                    <SkillBar
+                                    <SkillRow
                                         key={tech.name}
                                         name={tech.name}
                                         level={tech.level}
@@ -92,5 +92,66 @@ export function TechStack() {
                 </div>
             </div>
         </section>
+    );
+}
+
+type SkillRowProps = {
+    name: string;
+    level: string;
+    note: string;
+    colorClass: string;
+    activeId: string;
+    icon?: string;
+    iconClassName?: string;
+};
+
+function SkillRow({ name, level, note, colorClass, icon, iconClassName }: SkillRowProps) {
+    const [hovered, setHovered] = useState(false);
+
+    const levelColors: Record<string, string> = {
+        Expert: "text-secondary",
+        Proficient: "text-primary",
+        Familiar: "text-muted-foreground",
+    };
+
+    return (
+        <div
+            className="group cursor-default"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            <div className="flex items-center justify-between mb-1.5">
+                <div className="flex items-center gap-2">
+                    {icon && (
+                        <img
+                            src={icon}
+                            alt=""
+                            className={`flex-shrink-0 object-contain w-4 h-4 ${iconClassName ?? ''}`}
+                            width={16}
+                            height={16}
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    )}
+                    <span className="text-sm text-foreground">{name}</span>
+                    {hovered && (
+                        <span className="text-xs text-muted-foreground animate-in fade-in duration-150">
+                            — {note}
+                        </span>
+                    )}
+                </div>
+                <span className={`text-xs tabular-nums font-bold ${levelColors[level] || colorClass}`}>
+                    {level}
+                </span>
+            </div>
+            <div className="w-full h-[3px] bg-border rounded-full overflow-hidden">
+                <div
+                    className={`h-full rounded-full transition-all duration-700 ease-out ${colorClass.replace("text-", "bg-")}`}
+                    style={{
+                        width: level === "Expert" ? "100%" : level === "Proficient" ? "75%" : "50%",
+                    }}
+                />
+            </div>
+        </div>
     );
 }

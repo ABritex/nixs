@@ -55,7 +55,19 @@ export const TECH_CATEGORIES = [
         ],
     },
 
-
+    {
+        id: "languages",
+        label: "Languages",
+        color: "text-secondary",
+        borderColor: "border-secondary/30",
+        bgColor: "bg-secondary/10",
+        progressColor: "bg-secondary",
+        techs: [
+            { name: "Python", level: "Expert", note: "Scripting, automation", icon: "/icons/python.svg" },
+            { name: "Java", level: "Familiar", note: "OOP, Android basics", icon: "/icons/java.svg" },
+            { name: "C++", level: "Familiar", note: "Performance, systems", icon: "/icons/cpp.svg" },
+        ],
+    },
 ];
 
 export const TOOLS = [
@@ -64,6 +76,9 @@ export const TOOLS = [
     { name: "Figma", tag: "ui/ux design", color: "text-primary", icon: "/icons/figma.svg" },
     { name: "Adobe Photoshop", tag: "photo editing", color: "text-accent", icon: "/icons/adobe-photoshop.svg" },
     { name: "Adobe Illustrator", tag: "vector design", color: "text-secondary", icon: "/icons/adobe-illustrator.svg" },
+    { name: "Adobe Premiere Pro", tag: "video editing", color: "text-accent", icon: "/icons/adobe-premiere-pro.svg" },
+    { name: "Excalidraw", tag: "collaboration", color: "text-primary", icon: "/icons/excalidraw.svg" },
+    { name: "Aseprite", tag: "pixel art", color: "text-primary", icon: "/icons/aseprite.svg" },
     { name: "Adobe", tag: "creative suite", color: "text-accent", icon: "/icons/adobe.svg" },
     { name: "GitHub", tag: "vcs", color: "text-foreground", icon: "/icons/github.svg", iconClassName: "invert" },
     { name: "Postman", tag: "api testing", color: "text-accent", icon: "/icons/postman.svg" },
@@ -71,6 +86,106 @@ export const TOOLS = [
     { name: "Obsidian", tag: "notes", color: "text-secondary", icon: "/icons/obsidian.svg" },
     { name: "Notion", tag: "notes", color: "text-accent", icon: "/icons/notion-light.svg" },
 ];
+
+export const CURRENTLY_LEARNING = [
+    { name: "Machine Learning", tag: "ai & data", color: "text-accent", context: "Exploring model training, data pipelines, and practical AI integration for web apps." },
+];
+
+export const WANT_TO_LEARN = [
+    { name: "Rust", tag: "systems programming", color: "text-secondary", icon: "/icons/rust.svg", iconClassName: "invert" },
+    { name: "Blender", tag: "3d modeling", color: "text-primary", icon: "/icons/blender.svg" },
+    { name: "Godot", tag: "game engine", color: "text-accent", icon: "/icons/godot.svg" },
+    { name: "Golang", tag: "backend", color: "text-secondary", icon: "/icons/golang.svg" },
+    { name: "Raspberry Pi", tag: "iot / hardware", color: "text-primary", icon: "/icons/raspberry-pi.svg" },
+    { name: "Electron", tag: "desktop apps", color: "text-accent", icon: "/icons/electron.svg" },
+];
+
+export const GRAPHICS_DESIGNS = [
+    {
+        id: "steam-showcase-full",
+        type: "video" as const,
+        src: "/images/graphics/showcase1.mp4",
+        title: "Steam Profile Showcase",
+        description: "Full animated showcase cover",
+        height: 750,
+    },
+    {
+        id: "steam-profile",
+        type: "image" as const,
+        src: "/images/graphics/steam-profile-showcase.png",
+        title: "Steam Profile Layout",
+        description: "Complete profile with custom showcase",
+        height: 350,
+        children: [
+            {
+                id: "steam-showcase-part1",
+                type: "image" as const,
+                src: "/images/graphics/steam-showcase-1.png",
+                title: "Steam Showcase - Part 1",
+                description: "Main character artwork",
+                height: 550,
+            },
+            {
+                id: "steam-showcase-part2",
+                type: "image" as const,
+                src: "/images/graphics/steam-showcase-2.png",
+                title: "Steam Showcase - Part 2",
+                description: "Extended artwork panel",
+                height: 550,
+            },
+        ],
+    },
+    {
+        id: "t-shirt-design",
+        type: "image" as const,
+        src: "/images/graphics/first-t-shirt-design.png",
+        title: "T-Shirt Design",
+        description: "Front & back polo shirt design",
+        height: 350,
+    },
+    {
+        id: "mc-gui-design",
+        type: "image" as const,
+        src: "/images/graphics/mc-gui0.png",
+        title: "Minecraft GUI Design",
+        description: "Custom server interface and HUD elements",
+        height: 450,
+        children: [
+            {
+                id: "mc-gui-main-menu",
+                type: "image" as const,
+                src: "/images/graphics/mc-gui1.png",
+                title: "Main Menu GUI",
+                description: "Custom pause/menu screen",
+                height: 450,
+            },
+            {
+                id: "mc-gui-inventory",
+                type: "image" as const,
+                src: "/images/graphics/mc-gui2.png",
+                title: "Inventory GUI",
+                description: "Custom inventory/skill layout",
+                height: 500,
+            },
+            {
+                id: "mc-gui-party",
+                type: "image" as const,
+                src: "/images/graphics/mc-party.png",
+                title: "Party HUD",
+                description: "MMORPG-style party interface",
+                height: 350,
+            },
+            {
+                id: "mc-gui-tags",
+                type: "image" as const,
+                src: "/images/graphics/mc-tag.png",
+                title: "Role Tags",
+                description: "Custom server rank tags",
+                height: 550,
+            },
+        ],
+    },
+] as const;
 
 export const PROJECTS = [
     {

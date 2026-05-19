@@ -69,7 +69,7 @@ export default function HeroSection() {
                         <div ref={ctaRef} className="flex flex-wrap items-center gap-3 pt-2">
                             {SOCIALS.map((s) => (
                                 <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="btn-pop cursor-target w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground hover:border-accent/50 transition-all" aria-label={s.label}>
-                                    <img src={s.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" />
+                                    <img src={s.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" decoding="async" />
                                 </a>
                             ))}
                             <a href="/resume.pdf" target="_blank" className="btn-pop cursor-target ml-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold tracking-wide hover:opacity-90 transition-all">
@@ -80,7 +80,7 @@ export default function HeroSection() {
 
                     <div ref={imgRef} className="lg:col-span-2 flex justify-center lg:justify-end">
                         <BorderGlow edgeSensitivity={30} glowColor="40 80 80" backgroundColor="#120F17" borderRadius={28} glowRadius={40} glowIntensity={1} coneSpread={25} animated={false} colors={['#c084fc', '#f472b6', '#38bdf8']} className="w-[260px] h-[380px] md:w-[300px] md:h-[420px]">
-                            <img src="/images/1by3.png" alt={PERSON.name} className="w-full h-full object-cover rounded-[28px]" width={300} height={420} />
+                            <img src="/images/1by3.png" alt={PERSON.name} className="w-full h-full object-cover rounded-[28px]" width={300} height={420} fetchPriority="high" />
                         </BorderGlow>
                     </div>
                 </div>

@@ -1,6 +1,9 @@
 import { Mail, MapPin, Clock, Terminal } from "lucide-react";
 import { PERSON } from "#/constants/personal";
 
+export const CONTACT_COOLDOWN_MS = 30 * 1000;
+export const CONTACT_COOLDOWN_STORAGE_KEY = "nixs_contact_cooldown";
+
 export const CONTACT_LINKS = [
     {
         label: "Email",

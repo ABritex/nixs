@@ -2,7 +2,7 @@ import { TOOLS } from "./constants";
 
 export function ToolsGrid() {
     return (
-        <section id="tools" className="relative w-full flex flex-col gap-8 overflow-hidden pointer-events-none" style={{ fontFamily: "var(--font-mono)" }}>
+        <section id="tools" className="relative w-full flex flex-col gap-8 overflow-hidden pointer-events-none" style={{ contentVisibility: 'auto', fontFamily: "var(--font-mono)" }}>
             <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
                 style={{
                     backgroundImage: 'radial-gradient(circle at 70% 30%, hsl(var(--secondary)) 0%, transparent 50%), radial-gradient(circle at 30% 70%, hsl(var(--primary)) 0%, transparent 50%)',
@@ -29,7 +29,7 @@ export function ToolsGrid() {
                         >
                             <div className="flex items-center gap-3">
                                 {tool.icon && (
-                                    <img src={tool.icon} alt="" className={`flex-shrink-0 object-contain w-5 h-5 ${tool.iconClassName ?? ''}`} width={20} height={20} loading="lazy" />
+                                    <img src={tool.icon} alt="" className={`flex-shrink-0 object-contain w-5 h-5 ${tool.iconClassName ?? ''}`} width={20} height={20} loading="lazy" decoding="async" />
                                 )}
                                 <div>
                                     <p className="text-[13px] text-foreground font-semibold">{tool.name}</p>

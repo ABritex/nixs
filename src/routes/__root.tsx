@@ -1,4 +1,4 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router'
 import appCss from '../styles.css?url'
 import { Providers } from '#/components/providers'
 import { cn } from '#/lib/utils'
@@ -7,7 +7,9 @@ import Header from '#/components/header'
 import { SmoothScroll } from '#/components/smooth-scroll'
 import { ScrollReveal } from '#/components/scroll-reveal'
 import ShapeGrid from '#/components/shape-grid'
-import TargetCursor from '#/components/ui/target-cursor'
+import { LazyTargetCursor } from '#/components/lazy-cursor'
+import { ErrorBoundary } from '#/components/error-boundary'
+import { RouteLoader } from '#/components/route-loader'
 
 export const Route = createRootRoute({
     head: () => ({
@@ -16,6 +18,7 @@ export const Route = createRootRoute({
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { name: 'robots', content: 'index, follow' },
             { name: 'theme-color', content: '#0d0b12' },
+            { name: 'color-scheme', content: 'dark' },
             {
                 title: 'Nicholas Abeleda — Full-Stack Developer & Designer',
             },
@@ -57,7 +60,7 @@ export const Route = createRootRoute({
             },
             {
                 property: 'og:image:type',
-                content: 'image/png',
+                content: 'image/jpeg',
             },
             {
                 property: 'og:image:width',
@@ -109,33 +112,54 @@ export const Route = createRootRoute({
             { rel: 'icon', type: 'image/png', href: '/logo192.png' },
             { rel: 'apple-touch-icon', href: '/logo192.png' },
             { rel: 'stylesheet', href: appCss },
+            { rel: 'preload', href: '/fonts/GeistSans.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
+            { rel: 'preload', href: '/fonts/JetBrainsMono.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
+        ],
+        scripts: [
+            {
+                type: 'application/ld+json',
+                innerHTML: JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'Person',
+                    name: 'Nicholas Abeleda',
+                    url: 'https://nixs-portfolio.vercel.app/',
+                    jobTitle: 'Full-Stack Developer & Designer',
+                    email: 'nicholasabeleda.bsit@gmail.com',
+                    sameAs: [
+                        'https://github.com/ABritex',
+                        'https://www.youtube.com/@ABr1tex',
+                        'https://x.com/ABr1tex',
+                    ],
+                    knowsAbout: ['React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'Tailwind CSS'],
+                }),
+            },
         ],
     }),
     shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+    const isLoading = useRouterState({ select: (s) => s.isLoading });
+
     return (
         <html lang="en" className={cn("h-full", "antialiased")} suppressHydrationWarning>
             <head>
                 <HeadContent />
             </head>
             <body>
-                <TargetCursor
-                    spinDuration={2}
-                    hideDefaultCursor
-                    parallaxOn
-                    hoverDuration={0.2}
-                />
+                <RouteLoader isLoading={isLoading} />
+                <LazyTargetCursor />
                 <div className="fixed inset-0 z-0">
-                    <ShapeGrid speed={0.3} squareSize={40} borderColor="rgba(255,255,255,0.03)" shape="square" direction="diagonal" hoverTrailAmount={5} hoverFillColor="rgba(255,255,255,0.03)" />
+                    <ShapeGrid speed={0.3} squareSize={40} borderColor="rgba(255,255,255,0.03)" shape="square" direction="diagonal" hoverTrailAmount={5} hoverFillColor="rgba(255,255,255,0.10)" />
                 </div>
                 <SmoothScroll />
                 <ScrollReveal />
                 <Providers>
                     <Header />
                     <main className="pt-16">
-                        {children}
+                        <ErrorBoundary>
+                            {children}
+                        </ErrorBoundary>
                     </main>
                     <Footer />
                     <Scripts />
