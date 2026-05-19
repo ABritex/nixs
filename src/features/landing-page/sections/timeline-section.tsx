@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { gsap, ScrollTrigger } from '#/lib/gsap'
-import StarLayer from '../components/star-layer'
+import { gsap } from '#/lib/gsap'
 import { TIMELINE } from '../constants/timeline'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '#/components/ui/tabs'
 
@@ -9,14 +8,7 @@ function TimelineCard({ entry }: { entry: { year: string; title: string; desc: s
         <div className="rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm p-5 hover:bg-card/80 transition-all">
             <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted/30 border border-border/30 overflow-hidden">
-                    <img
-                        src={entry.icon}
-                        alt=""
-                        className="h-full w-full object-cover rounded-full"
-                        width={48}
-                        height={48}
-                        loading="lazy"
-                    />
+                    <img src={entry.icon} alt="" className="h-full w-full object-cover rounded-full" width={48} height={48} loading="lazy" />
                 </div>
                 <div className="flex-1 space-y-1">
                     <p className="text-xs font-mono text-muted-foreground/50">{entry.year}</p>
@@ -53,14 +45,7 @@ export default function TimelineSection() {
 
     return (
         <section ref={ref} className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden pointer-events-none">
-            <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.04]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 30% 50%, hsl(var(--primary)) 0%, transparent 60%), radial-gradient(circle at 70% 50%, hsl(var(--accent)) 0%, transparent 60%)',
-                }}
-            />
-            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
-                <StarLayer count={100} color="rgba(255,255,255,0.10)" speed={180} />
-            </div>
+            <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, hsl(var(--primary)) 0%, transparent 60%), radial-gradient(circle at 70% 50%, hsl(var(--accent)) 0%, transparent 60%)', }} />
 
             <div className="relative z-10 w-full max-w-3xl mx-auto space-y-10 pointer-events-auto">
                 <div className="text-center space-y-3">

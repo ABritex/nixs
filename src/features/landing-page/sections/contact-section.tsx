@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '#/lib/gsap'
+import { gsap } from '#/lib/gsap'
 import { PERSON } from '#/constants/personal'
 import { SOCIALS } from '../constants'
 
@@ -19,14 +19,8 @@ export default function ContactSection() {
     }, [])
 
     return (
-        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pointer-events-none"
-            style={{ background: 'linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted) / 0.3), hsl(var(--background)))' }}
-        >
-            <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.04]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 50% 30%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 50% 70%, hsl(var(--primary)) 0%, transparent 50%)',
-                }}
-            />
+        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pointer-events-none" style={{ background: 'linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted) / 0.3), hsl(var(--background)))' }}>
+            <div ref={bgRef} className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 50% 70%, hsl(var(--primary)) 0%, transparent 50%)', }} />
             <div className="relative z-10 w-full max-w-3xl mx-auto text-center space-y-8 md:space-y-10 pointer-events-auto">
                 <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
                     <span className="text-accent">$</span> contact
@@ -38,15 +32,11 @@ export default function ContactSection() {
                     Whether it&apos;s a full-stack system, a design refresh, or just talking tech — I&apos;m always open to connecting.
                 </p>
                 <div className="scroll-reveal flex flex-col sm:flex-row items-center justify-center gap-4 pt-2" data-delay="300">
-                    <a href={`mailto:${PERSON.email}`}
-                        className="cursor-target px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all font-mono"
-                    >
+                    <a href={`mailto:${PERSON.email}`} className="cursor-target px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all font-mono">
                         {PERSON.email}
                     </a>
                     {SOCIALS.map((s) => (
-                        <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
-                            className="cursor-target text-sm text-muted-foreground/50 hover:text-foreground transition-colors font-mono"
-                        >
+                        <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="cursor-target text-sm text-muted-foreground/50 hover:text-foreground transition-colors font-mono">
                             {s.label}
                         </a>
                     ))}

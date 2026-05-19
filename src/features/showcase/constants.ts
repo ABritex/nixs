@@ -8,6 +8,7 @@ export const TECH_CATEGORIES = [
         color: "text-primary",
         borderColor: "border-primary/30",
         bgColor: "bg-primary/10",
+        progressColor: "bg-primary",
         techs: [
             { name: "Next.js", level: "Expert", note: "App Router, SSR, RSC", icon: "/icons/nextjs.svg" },
             { name: "React", level: "Expert", note: "Hooks, Context, Suspense", icon: "/icons/reactjs.svg" },
@@ -23,6 +24,7 @@ export const TECH_CATEGORIES = [
         color: "text-accent",
         borderColor: "border-accent/30",
         bgColor: "bg-accent/10",
+        progressColor: "bg-accent",
         techs: [
             { name: "Node.js", level: "Expert", note: "REST APIs, middleware", icon: "/icons/nodejs.svg" },
             { name: "PostgreSQL", level: "Expert", note: "Relational databases", icon: "/icons/postgresql.svg" },
