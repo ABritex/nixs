@@ -1,10 +1,14 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { gsap } from '#/lib/gsap'
 import { AnimatePresence, motion } from 'framer-motion'
-import { PROJECTS } from '#/features/showcase/constants'
+import { PROJECTS, GRAPHICS_DESIGNS } from '#/features/showcase/constants'
 import { Tooltip } from '#/components/ui/tooltip-card'
 import { LinkPreview } from '#/components/ui/link-preview'
 import { useOutsideClick } from '#/hooks/use-outside-click'
+import {
+    DraggableCardBody,
+    DraggableCardContainer,
+} from '#/components/ui/draggable-card'
 
 const TECH_DESCRIPTIONS: Record<string, string> = {
     'Next.js': 'React framework with App Router, SSR, and RSC support',
@@ -43,6 +47,7 @@ export default function WorkSection() {
     const ref = useRef<HTMLDivElement>(null)
     const bgRef = useRef<HTMLDivElement>(null)
     const modalRef = useRef<HTMLDivElement>(null)
+    const cardContainerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -178,6 +183,55 @@ export default function WorkSection() {
                     ))}
                 </div>
 
+                <div className="scroll-reveal text-center space-y-4 pt-16" data-delay="300">
+                    <div className="flex items-center justify-center gap-3">
+                        <span className="h-px w-6 bg-accent/20" />
+                        <p className="text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
+                            <span className="text-accent">$</span> design work
+                        </p>
+                        <span className="h-px w-6 bg-accent/20" />
+                    </div>
+                    <h3 className="text-[clamp(20px,4vw,40px)] font-black leading-[1.05] tracking-tight text-foreground">
+                        Graphics <span className="text-accent/70">Preview</span>
+                    </h3>
+                    <p className="text-xs text-muted-foreground/50 font-mono max-w-xs mx-auto leading-relaxed">
+                        Design isn&apos;t ornament — it&apos;s intent. Every pixel placed to
+                        communicate, guide, or delight.
+                    </p>
+                </div>
+
+                <div className="scroll-reveal" data-delay="350">
+                    <DraggableCardContainer
+                        ref={cardContainerRef}
+                        className="relative w-full h-[32rem] rounded-xl border border-border/5 bg-muted/[0.02]"
+                    >
+                        {[...GRAPHICS_DESIGNS].sort(() => Math.random() - 0.5).slice(0, 7).map((g, i) => {
+                            const rots = ['-rotate-3', 'rotate-2', 'rotate-5', '-rotate-4', 'rotate-3', '-rotate-2', 'rotate-6']
+                            const isVideo = g.type === 'video'
+                            return (
+                                <DraggableCardBody
+                                    key={g.id}
+                                    dragConstraintsRef={cardContainerRef}
+                                    className={`absolute p-0 w-36 sm:w-44 ${rots[i]}`}
+                                    style={{ top: `${8 + (i % 4) * 26}%`, left: `${4 + (i % 3) * 34}%` }}
+                                >
+                                    {isVideo ? (
+                                        <video src={g.src} className="pointer-events-none w-full aspect-video object-cover" muted loop autoPlay playsInline />
+                                    ) : (
+                                        <img src={g.src} alt={g.title} className="pointer-events-none block w-full" loading="lazy" />
+                                    )}
+                                    <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6">
+                                        <p className="text-[10px] font-semibold text-white drop-shadow-sm leading-tight">{g.title}</p>
+                                    </div>
+                                </DraggableCardBody>
+                            )
+                        })}
+                        <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] text-muted-foreground/20 font-mono pointer-events-none select-none">
+                            drag cards around
+                        </p>
+                    </DraggableCardContainer>
+                </div>
+
                 <div className="scroll-reveal flex items-center justify-center gap-4 text-[10px] font-mono" data-delay="400">
                     <p className="text-muted-foreground/30">
                         <span className="text-accent/40">▸</span> more projects on{' '}
@@ -186,7 +240,7 @@ export default function WorkSection() {
                         </a>
                     </p>
                     <a href="/show-case" className="cursor-target px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-all">
-                        more on →
+                        full showcase →
                     </a>
                 </div>
             </div>

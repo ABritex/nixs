@@ -35,6 +35,9 @@ export default function ContactSection() {
                     <a href={`mailto:${PERSON.email}`} className="cursor-target px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all font-mono">
                         {PERSON.email}
                     </a>
+                    <a href="/contact-me" className="cursor-target px-6 py-3 rounded-full border border-border bg-card text-muted-foreground hover:text-foreground hover:border-accent/50 text-sm font-semibold transition-all font-mono">
+                        contact form →
+                    </a>
                     {SOCIALS.map((s) => (
                         <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="cursor-target text-sm text-muted-foreground/50 hover:text-foreground transition-colors font-mono">
                             {s.label}

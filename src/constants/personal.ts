@@ -3,7 +3,7 @@ const PERSON = {
     name: "Nicholas Abeleda",
     title: "Full-Stack Developer & Builder",
     location: "Philippines",
-    email: "nicholasabeleda.bsit@gmail.com",
+    email: "nicos.abeleda@gmail.com",
     id: "MA22-IT-02673",
     course: "Bachelor of Science in Information Technology, 4th Year Graduate",
     academicYear: "2022–2026",

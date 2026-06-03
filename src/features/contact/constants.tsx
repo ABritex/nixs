@@ -7,8 +7,8 @@ export const CONTACT_COOLDOWN_STORAGE_KEY = "nixs_contact_cooldown";
 export const CONTACT_LINKS = [
     {
         label: "Email",
-        value: "nicholasabeleda.bsit@gmail.com",
-        href: "mailto:nicholasabeleda.bsit@gmail.com",
+        value: "nicos.abeleda@gmail.com",
+        href: "mailto:nicos.abeleda@gmail.com",
         icon: <Mail size={15} />,
         color: "primary" as const,
         command: "mailto",

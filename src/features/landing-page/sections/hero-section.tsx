@@ -58,7 +58,7 @@ export default function HeroSection() {
                                 <span className="text-accent">nicholas-abeleda</span> @ <span className="text-primary">fullstack</span> {'>'}
                             </p>
                             <h1 ref={titleRef} className="font-black leading-[0.9] tracking-tight text-[clamp(44px,8vw,96px)] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                                I am a Full-Stack Dev. &amp; Graphics Designer
+                                    <span className="block text-[clamp(24px,4vw,48px)] text-muted-foreground/50 leading-none mb-[-0.15em]">I am a</span>Full-Stack Dev. &amp; Graphics Designer
                             </h1>
                         </div>
 
@@ -72,7 +72,7 @@ export default function HeroSection() {
                                     <img src={s.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" decoding="async" />
                                 </a>
                             ))}
-                            <a href="/resume.pdf" target="_blank" className="btn-pop cursor-target ml-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold tracking-wide hover:opacity-90 transition-all">
+                            <a href="/resume-n.pdf" target="_blank" className="btn-pop cursor-target ml-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold tracking-wide hover:opacity-90 transition-all">
                                 Resume
                             </a>
                         </div>

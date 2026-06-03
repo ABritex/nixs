@@ -16,27 +16,27 @@ export const TIMELINE = {
             icon: '/images/omsc.webp',
             tags: ['College', 'BSIT'],
         },
-        {
-            year: '2020 – 2022',
-            title: 'Senior High School (STEM)',
-            desc: 'Divine Word College of San Jose. Completed STEM strand with focus on science and mathematics.',
-            icon: '/images/dwcsj.webp',
-            tags: ['SHS', 'STEM'],
-        },
-        {
-            year: '2016 – 2020',
-            title: 'Junior High School',
-            desc: 'Divine Word College of San Jose. Completed K-12 junior high curriculum.',
-            icon: '/images/dwcsj.webp',
-            tags: ['JHS'],
-        },
-        {
-            year: '2010 – 2016',
-            title: 'Elementary',
-            desc: 'Grace Christian School. Completed primary education.',
-            icon: '/images/gcs.webp',
-            tags: ['Elementary'],
-        },
+        // {
+        //     year: '2020 – 2022',
+        //     title: 'Senior High School (STEM)',
+        //     desc: 'Divine Word College of San Jose. Completed STEM strand with focus on science and mathematics.',
+        //     icon: '/images/dwcsj.webp',
+        //     tags: ['SHS', 'STEM'],
+        // },
+        // {
+        //     year: '2016 – 2020',
+        //     title: 'Junior High School',
+        //     desc: 'Divine Word College of San Jose. Completed K-12 junior high curriculum.',
+        //     icon: '/images/dwcsj.webp',
+        //     tags: ['JHS'],
+        // },
+        // {
+        //     year: '2010 – 2016',
+        //     title: 'Elementary',
+        //     desc: 'Grace Christian School. Completed primary education.',
+        //     icon: '/images/gcs.webp',
+        //     tags: ['Elementary'],
+        // },
     ],
 } as const
 

@@ -77,6 +77,7 @@ export const TOOLS = [
     { name: "Adobe Photoshop", tag: "photo editing", color: "text-accent", icon: "/icons/adobe-photoshop.svg" },
     { name: "Adobe Illustrator", tag: "vector design", color: "text-secondary", icon: "/icons/adobe-illustrator.svg" },
     { name: "Adobe Premiere Pro", tag: "video editing", color: "text-accent", icon: "/icons/adobe-premiere-pro.svg" },
+    { name: "After Effects", tag: "motion design", color: "text-primary", icon: "/icons/adobe-after-effects.svg" },
     { name: "Excalidraw", tag: "collaboration", color: "text-primary", icon: "/icons/excalidraw.svg" },
     { name: "Aseprite", tag: "pixel art", color: "text-primary", icon: "/icons/aseprite.svg" },
     { name: "Adobe", tag: "creative suite", color: "text-accent", icon: "/icons/adobe.svg" },
@@ -186,6 +187,8 @@ export const GRAPHICS_DESIGNS = [
         ],
     },
 ] as const;
+
+export type GraphicsDesign = (typeof GRAPHICS_DESIGNS)[number]
 
 export const PROJECTS = [
     {

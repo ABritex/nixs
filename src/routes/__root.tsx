@@ -124,7 +124,7 @@ export const Route = createRootRoute({
                     name: 'Nicholas Abeleda',
                     url: 'https://nixs-portfolio.vercel.app/',
                     jobTitle: 'Full-Stack Developer & Designer',
-                    email: 'nicholasabeleda.bsit@gmail.com',
+                    email: 'nicos.abeleda@gmail.com',
                     sameAs: [
                         'https://github.com/ABritex',
                         'https://www.youtube.com/@ABr1tex',
