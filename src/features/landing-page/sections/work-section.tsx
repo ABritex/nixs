@@ -212,7 +212,7 @@ export default function WorkSection() {
                                 <DraggableCardBody
                                     key={g.id}
                                     dragConstraintsRef={cardContainerRef}
-                                    className={`absolute p-0 w-36 sm:w-44 ${rots[i]}`}
+                                    className={`cursor-grab cursor-target active:cursor-grabbing absolute p-0 w-36 sm:w-44 ${rots[i]}`}
                                     style={{ top: `${8 + (i % 4) * 26}%`, left: `${4 + (i % 3) * 34}%` }}
                                 >
                                     {isVideo ? (
@@ -226,9 +226,12 @@ export default function WorkSection() {
                                 </DraggableCardBody>
                             )
                         })}
-                        <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] text-muted-foreground/20 font-mono pointer-events-none select-none">
-                            drag cards around
-                        </p>
+                        <a
+                            href="/show-case#graphics"
+                            className="cursor-target absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 px-5 py-3 rounded-full bg-secondary/90 backdrop-blur-sm text-secondary-foreground text-xs font-mono border border-border/60 font-semibold hover:bg-accent hover:text-accent-foreground hover:border-accent hover:scale-105 transition-all shadow-lg pointer-events-auto select-none"
+                        >
+                            <span className="mr-1.5 opacity-60">▸</span> all graphics
+                        </a>
                     </DraggableCardContainer>
                 </div>
 

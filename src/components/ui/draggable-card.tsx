@@ -16,6 +16,7 @@ interface DraggableCardBodyProps {
     children?: React.ReactNode;
     dragConstraintsRef?: React.RefObject<Element | null>;
     style?: React.CSSProperties;
+    onClick?: () => void;
 }
 
 export const DraggableCardBody = ({
@@ -23,6 +24,7 @@ export const DraggableCardBody = ({
     children,
     dragConstraintsRef,
     style: externalStyle,
+    onClick,
 }: DraggableCardBodyProps) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -165,6 +167,7 @@ export const DraggableCardBody = ({
             whileHover={{ scale: 1.02 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={onClick}
             className={cn(
                 "relative overflow-hidden rounded-md bg-neutral-100 shadow-2xl transform-3d dark:bg-neutral-900",
                 className,
