@@ -31,7 +31,7 @@ export default function Header() {
     return (
         <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
             <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/80 backdrop-blur-xl px-5 py-3 flex items-center justify-between">
-                <Link to="/" className="flex items-center gap-2 text-[13px] tracking-widest text-foreground no-underline">
+                <Link to="/" className="cursor-target flex items-center gap-2 text-[13px] tracking-widest text-foreground no-underline">
                     <span className="text-accent">▸</span>
                     <span className="font-bold">nicholas-abeleda</span>
                     <span className="text-muted-foreground/40">~</span>
@@ -42,37 +42,37 @@ export default function Header() {
                         <span className="text-accent/40">❯</span> goto
                     </span>
                     {NAV_ITEMS.map(({ label, cmd, href }) => {
-                        const linkClass = 'relative flex items-center gap-1.5 text-[11px] text-muted-foreground/70 hover:text-foreground px-2.5 py-1.5 transition-colors no-underline after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-px after:w-0 after:bg-accent/60 after:transition-all hover:after:w-full' + (label === 'Showcase' && showTooltip ? ' text-accent after:w-full' : '')
+                        const linkClass = 'cursor-target relative flex items-center gap-1.5 text-[11px] text-muted-foreground/70 hover:text-foreground px-2.5 py-1.5 transition-colors no-underline after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-px after:w-0 after:bg-accent/60 after:transition-all hover:after:w-full' + (label === 'Showcase' && showTooltip ? ' text-accent after:w-full' : '')
                         return (
-                        <span key={label} className="relative">
-                            <Link
-                                to={href}
-                                activeProps={{ className: 'text-foreground after:w-full' }}
-                                className={linkClass}
-                            >
-                                <span className="text-accent/40">$</span>
-                                {cmd}
-                            </Link>
-                            {label === 'Showcase' && !isShowcase && (
-                                <AnimatePresence>
-                                    {showTooltip && (
-                                        <motion.span
-                                            initial={{ opacity: 0, y: 6 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 4 }}
-                                            transition={{ duration: 0.25 }}
-                                            className="absolute top-full left-1/2 -translate-x-1/2 mt-3 whitespace-nowrap z-50"
-                                        >
-                                            <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-accent/10 border-l border-t border-accent/20" />
-                                            <span className="block text-[10px] font-mono px-2.5 py-1.5 rounded-md bg-accent/10 text-accent border border-accent/20 shadow-sm animate-pulse">
-                                                <span className="mr-1">✦</span> check this out
-                                            </span>
-                                        </motion.span>
-                                    )}
-                                </AnimatePresence>
-                            )}
-                        </span>
-                    );
+                            <span key={label} className="relative">
+                                <Link
+                                    to={href}
+                                    activeProps={{ className: 'text-foreground after:w-full' }}
+                                    className={linkClass}
+                                >
+                                    <span className="text-accent/40">$</span>
+                                    {cmd}
+                                </Link>
+                                {label === 'Showcase' && !isShowcase && (
+                                    <AnimatePresence>
+                                        {showTooltip && (
+                                            <motion.span
+                                                initial={{ opacity: 0, y: 6 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: 4 }}
+                                                transition={{ duration: 0.25 }}
+                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 whitespace-nowrap z-50"
+                                            >
+                                                <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-accent/10 border-l border-t border-accent/20" />
+                                                <span className="block text-[10px] font-mono px-2.5 py-1.5 rounded-md bg-accent/10 text-accent border border-accent/20 shadow-sm animate-pulse">
+                                                    <span className="mr-1">✦</span> check this out
+                                                </span>
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                )}
+                            </span>
+                        );
                     })}
                 </nav>
 
