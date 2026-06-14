@@ -108,7 +108,7 @@ export const GRAPHICS_DESIGNS = [
         src: "/images/graphics/showcase1.mp4",
         title: "Steam Profile Showcase",
         description: "Full animated showcase cover",
-        height: 750,
+        height: 600,
     },
     {
         id: "steam-profile",
@@ -116,7 +116,7 @@ export const GRAPHICS_DESIGNS = [
         src: "/images/graphics/steam-profile-showcase.png",
         title: "Steam Profile Layout",
         description: "Complete profile with custom showcase",
-        height: 350,
+        height: 250,
         children: [
             {
                 id: "steam-showcase-part1",
@@ -137,12 +137,30 @@ export const GRAPHICS_DESIGNS = [
         ],
     },
     {
+        id: "steam-showcase-2",
+        type: "video" as const,
+        src: "/images/graphics/steam-showcase-2.mp4",
+        title: "Steam Showcase 2",
+        description: "Animated profile showcase — full version",
+        height: 250,
+        children: [
+            {
+                id: "steam-showcase-2-child",
+                type: "image" as const,
+                src: "/images/graphics/steam-showcase-2-child.gif",
+                title: "Steam Showcase 2 — Frame",
+                description: "Key frame from the animation",
+                height: 550,
+            },
+        ],
+    },
+    {
         id: "t-shirt-design",
         type: "image" as const,
         src: "/images/graphics/first-t-shirt-design.png",
         title: "T-Shirt Design",
         description: "Front & back polo shirt design",
-        height: 350,
+        height: 300,
     },
     {
         id: "mc-gui-design",
@@ -207,7 +225,7 @@ export const PROJECTS = [
         title: "Minstrel",
         desc: "Full-stack music collection system — a React web app with custom audio player and a Discord bot that gathers songs from servers into a searchable library. Web frontend + bot backend working as one pipeline.",
         period: "2026",
-        cover: placeholderCover,
+        cover: "/images/projects/Minstel-Web-Home.jpg",
         logo: placeholderLogo,
         dot: "bg-[#BA7517]",
         fallbackIcon: "🎵",
@@ -232,7 +250,7 @@ export const PROJECTS = [
         title: "JNDM Sari-Sari Store",
         desc: "Full-featured convenience store management web app for clients to manage inventory, sales, and analytics.",
         period: "2025",
-        cover: placeholderCover,
+        cover: "/images/projects/JNDM-web-login.webp",
         logo: "/images/projects/jndm-logo.webp",
         dot: "bg-[#4F46E5]",
         fallbackIcon: "🛒",
