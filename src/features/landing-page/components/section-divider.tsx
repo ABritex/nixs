@@ -9,7 +9,7 @@ export default function SectionDivider({ text = 'nicholas abeleda • fullstack 
                 curveAmount={300}
                 direction="left"
                 interactive={false}
-                className="fill-white/10"
+                className="text-foreground/10"
             />
         </div>
     )

@@ -1,95 +1,158 @@
 import { useEffect, useRef } from 'react'
-import { gsap } from '#/lib/gsap'
+import { gsap, SplitText } from '#/lib/gsap'
 import { PERSON } from '#/constants/personal'
 import { SOCIALS } from '../constants'
-import BorderGlow from '#/components/ui/border-glow'
+
+const HIRE_STATS = [
+    { value: 2022, suffix: '', label: 'Active Since' },
+    { value: 27, suffix: '', label: 'Projects Shipped' },
+    { value: 5, suffix: '+', label: 'Clients Served' },
+]
+
+const TECH = ['React', 'Node', 'TypeScript', 'Python', 'Postgres', 'Next.js']
 
 export default function HeroSection() {
-    const ref = useRef<HTMLDivElement>(null)
-    const glowRef = useRef<HTMLDivElement>(null)
-    const imgRef = useRef<HTMLDivElement>(null)
-    const titleRef = useRef<HTMLHeadingElement>(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const headingRef = useRef<HTMLHeadingElement>(null)
+    const subtitleRef = useRef<HTMLParagraphElement>(null)
     const badgeRef = useRef<HTMLDivElement>(null)
-    const cmdRef = useRef<HTMLParagraphElement>(null)
-    const bioRef = useRef<HTMLParagraphElement>(null)
     const ctaRef = useRef<HTMLDivElement>(null)
+    const statsRef = useRef<HTMLDivElement>(null)
+    const techRef = useRef<HTMLDivElement>(null)
+    const socialsRef = useRef<HTMLDivElement>(null)
     const scrollRef = useRef<HTMLDivElement>(null)
+    const avatarWrapRef = useRef<HTMLDivElement>(null)
+    const orbit1Ref = useRef<HTMLDivElement>(null)
+    const orbit2Ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-            tl.fromTo(cmdRef.current, { opacity: 0, x: -15 }, { opacity: 1, x: 0, duration: 0.4 })
-            tl.fromTo(imgRef.current, { opacity: 0, scale: 0.8, y: 40, rotate: -3 }, { opacity: 1, scale: 1, y: 0, rotate: 0, duration: 0.9, ease: 'back.out(1.7)' }, '-=0.2')
-            tl.fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-            tl.fromTo(bioRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2')
-            tl.fromTo(ctaRef.current, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.06, ease: 'back.out(2)' }, '-=0.1')
-            tl.fromTo(scrollRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.1')
 
-            gsap.to(glowRef.current, {
-                yPercent: 20, scale: 1.1, ease: 'none',
-                scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: 1.5 },
-            })
-            gsap.to(badgeRef.current, {
-                yPercent: -15, ease: 'none',
-                scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: 1 },
-            })
-        }, ref)
+            tl.fromTo(avatarWrapRef.current, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6 })
+            tl.fromTo(orbit1Ref.current, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 1 }, '-=0.4')
+            tl.fromTo(orbit2Ref.current, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2 }, '-=0.6')
+
+            if (headingRef.current) {
+                const split = new SplitText(headingRef.current, { type: 'chars' })
+                tl.fromTo(split.chars,
+                    { yPercent: 100, opacity: 0 },
+                    { yPercent: 0, opacity: 1, duration: 0.45, stagger: 0.018 },
+                    '-=0.3'
+                )
+            }
+
+            tl.fromTo(badgeRef.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25 }, '-=0.1')
+            tl.fromTo(subtitleRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25 })
+            tl.fromTo(statsRef.current?.children ?? [], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25, stagger: 0.05 }, '-=0.05')
+            tl.fromTo(ctaRef.current?.children ?? [], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.2, stagger: 0.05 }, '-=0.05')
+            tl.fromTo(techRef.current, { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0')
+            tl.fromTo(socialsRef.current, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.25 }, '-=0')
+            tl.fromTo(scrollRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 }, '-=0')
+        }, sectionRef)
 
         return () => ctx.revert()
     }, [])
 
     return (
-        <section ref={ref} className="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-20 pointer-events-none">
-            <div ref={glowRef} className="pointer-events-none absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-20 blur-[120px]" style={{ background: 'radial-gradient(circle, hsl(var(--primary) / 0.3), transparent)' }} />
-            <div ref={badgeRef} className="pointer-events-none absolute top-32 left-8 text-xs text-muted-foreground/10 font-mono leading-loose select-none hidden lg:block">
-                {'~'.repeat(30)}<br />
-                {'>'.repeat(30)}<br />
-                {'_'.repeat(30)}
-            </div>
-            <div className="relative w-full max-w-5xl mx-auto z-10 pointer-events-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
-                    <div className="lg:col-span-3 space-y-5">
-                        <p ref={cmdRef} className="text-xs tracking-[0.25em] text-muted-foreground/40 uppercase font-mono">
-                            <span className="text-accent">$</span> cat ~/whoami
-                        </p>
+        <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center px-4 pt-2 pb-16  overflow-hidden ">
+            <div className="relative z-10 w-full max-w-2xl mx-auto text-center space-y-6">
+                <div ref={badgeRef}
+                    className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase"
+                    style={{ border: '1px solid hsl(var(--accent) / 0.3)', background: 'hsl(var(--accent) / 0.06)', color: 'hsl(var(--accent))' }}
+                >
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                    Open for work — available now
+                </div>
 
-                        <div>
-                            <p className="text-sm text-muted-foreground/60 mb-2 font-mono">
-                                <span className="text-accent">nicholas-abeleda</span> @ <span className="text-primary">fullstack</span> {'>'}
-                            </p>
-                            <h1 ref={titleRef} className="font-black leading-[0.9] tracking-tight text-[clamp(44px,8vw,96px)] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                                    <span className="block text-[clamp(24px,4vw,48px)] text-muted-foreground/50 leading-none mb-[-0.15em]">I am a</span>Full-Stack Dev. &amp; Graphics Designer
-                            </h1>
+                <div className="flex justify-center">
+                    <div ref={avatarWrapRef} className="relative group">
+                        <div ref={orbit1Ref}
+                            className="absolute inset-0 rounded-full transition-all duration-500 group-hover:scale-125 group-hover:border-accent/40"
+                            style={{
+                                border: '1px solid hsl(var(--accent) / 0.15)',
+                                transform: 'scale(1.2)',
+                            }}
+                        />
+                        <div ref={orbit2Ref}
+                            className="absolute inset-0 rounded-full transition-all duration-500 group-hover:scale-140 group-hover:border-accent/30"
+                            style={{
+                                border: '1px dashed hsl(var(--primary) / 0.12)',
+                                transform: 'scale(1.35)',
+                            }}
+                        />
+                        <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden mx-auto transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_80px_hsl(var(--accent)/0.25)]"
+                            style={{
+                                border: '2px solid hsl(var(--border) / 0.3)',
+                                background: 'hsl(var(--card))',
+                                boxShadow: '0 0 60px hsl(var(--accent) / 0.12)',
+                            }}
+                        >
+                            <img src="/images/1by1.png" alt={PERSON.name}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                loading="lazy" decoding="async"
+                            />
                         </div>
-
-                        <p ref={bioRef} className="text-sm text-muted-foreground/60 leading-relaxed max-w-md font-mono">
-                            I build full-stack systems with clean architecture and meaningful UI. Node, React, Postgres — Linux on everything.
-                        </p>
-
-                        <div ref={ctaRef} className="flex flex-wrap items-center gap-3 pt-2">
-                            {SOCIALS.map((s) => (
-                                <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="btn-pop cursor-target w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground hover:border-accent/50 transition-all" aria-label={s.label}>
-                                    <img src={s.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" decoding="async" />
-                                </a>
-                            ))}
-                            <a href="/resume-n.pdf" target="_blank" className="btn-pop cursor-target ml-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold tracking-wide hover:opacity-90 transition-all">
-                                Resume
-                            </a>
+                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[8px] font-mono text-accent tracking-widest uppercase whitespace-nowrap">
+                            Click to connect
                         </div>
-                    </div>
-
-                    <div ref={imgRef} className="lg:col-span-2 flex justify-center lg:justify-end">
-                        <BorderGlow edgeSensitivity={30} glowColor="40 80 80" backgroundColor="#120F17" borderRadius={28} glowRadius={40} glowIntensity={1} coneSpread={25} animated={false} colors={['#c084fc', '#f472b6', '#38bdf8']} className="w-[260px] h-[380px] md:w-[300px] md:h-[420px]">
-                            <img src="/images/1by3.png" alt={PERSON.name} className="w-full h-full object-cover rounded-[28px]" width={300} height={420} fetchPriority="high" />
-                        </BorderGlow>
                     </div>
                 </div>
 
-                <div ref={scrollRef} className="flex flex-col items-center gap-1 mt-20 animate-[scrollBounce_1.6s_ease-in-out_infinite]">
-                    <span className="text-xs tracking-[0.3em] text-muted-foreground/30 uppercase font-mono">scroll</span>
-                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="text-muted-foreground/30">
-                        <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                <div className="space-y-2">
+                    <p className="text-xs font-mono text-muted-foreground/70 tracking-[0.2em] uppercase">{PERSON.name}</p>
+
+                    <h1 ref={headingRef} className="text-[clamp(28px,5vw,52px)] font-black leading-[1.05] tracking-[-0.02em] text-foreground text-balance">
+                        Full-stack builder who ships products that work.
+                    </h1>
+
+                    <p ref={subtitleRef} className="text-sm text-muted-foreground/80 max-w-md mx-auto leading-relaxed text-balance">
+                        Python & TypeScript — I build things that work, from concept to deployment.
+                    </p>
+                </div>
+
+                <div ref={statsRef} className="flex items-center justify-center gap-6 md:gap-10">
+                    {HIRE_STATS.map((s) => (
+                        <div key={s.label} className="text-center">
+                            <p className="text-lg md:text-xl font-black text-foreground">
+                                {s.value}<span className="text-xs text-muted-foreground/60 font-mono">{s.suffix}</span>
+                            </p>
+                            <p className="text-[9px] font-mono text-muted-foreground/60 tracking-wide">{s.label}</p>
+                        </div>
+                    ))}
+                </div>
+
+                <div ref={ctaRef} className="flex items-center justify-center gap-3 pt-1">
+                    <a href="/contact-me" className="cursor-target inline-flex px-6 py-2.5 rounded-full bg-foreground text-background text-xs font-semibold font-mono hover:opacity-90 transition-all">
+                        Hire Me
+                    </a>
+                    <a href="/show-case" className="cursor-target inline-flex px-6 py-2.5 rounded-full bg-card text-foreground text-xs font-mono border border-border/50 hover:bg-foreground/10 transition-all">
+                        View Projects
+                    </a>
+                    <a href="/resume-n.pdf" target="_blank" className="cursor-target inline-flex px-6 py-2.5 rounded-full bg-card text-foreground text-xs font-mono border border-border/30 hover:bg-foreground/10 transition-all">
+                        ↓ Resume
+                    </a>
+                </div>
+
+                <div ref={techRef} className="flex items-center justify-center gap-3 pt-1">
+                    {TECH.map((t) => (
+                        <span key={t} className="text-[9px] font-mono px-2 py-0.5 rounded"
+                            style={{ background: 'hsl(var(--card))', color: 'hsl(var(--muted-foreground) / 0.8)', border: '1px solid hsl(var(--border) / 0.3)' }}
+                        >
+                            {t}
+                        </span>
+                    ))}
+                </div>
+
+                <div ref={socialsRef} className="flex items-center justify-center gap-4 pt-2">
+                    {SOCIALS.map((s) => (
+                        <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
+                            className="text-[10px] font-mono text-muted-foreground/60 hover:text-foreground transition-colors tracking-wider uppercase"
+                        >
+                            <img src={s.icon} alt="" className="w-3 h-3 inline-block mr-1.5 dark:invert" />
+                            {s.label}
+                        </a>
+                    ))}
                 </div>
             </div>
         </section>

@@ -1,6 +1,5 @@
 import { Suspense, lazy } from 'react'
 import HeroSection from './sections/hero-section'
-import SectionDivider from './components/section-divider'
 
 const TimelineSection = lazy(() => import('./sections/timeline-section'))
 const WorkSection = lazy(() => import('./sections/work-section'))
@@ -10,15 +9,12 @@ export default function Hero() {
     return (
         <div className="font-mono overflow-x-hidden">
             <HeroSection />
-            <SectionDivider />
             <Suspense fallback={<SectionSkeleton />}>
                 <TimelineSection />
             </Suspense>
-            <SectionDivider text="projects • builds • open source" />
             <Suspense fallback={<SectionSkeleton />}>
                 <WorkSection />
             </Suspense>
-            <SectionDivider text="let&apos;s connect • collaborate • create" />
             <Suspense fallback={<SectionSkeleton />}>
                 <ContactSection />
             </Suspense>

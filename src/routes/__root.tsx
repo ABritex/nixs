@@ -1,4 +1,7 @@
-import { HeadContent, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, useRouterState, useLocation } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
+import { Sun, Moon } from 'lucide-react'
 import appCss from '../styles.css?url'
 import { Providers } from '#/components/providers'
 import { cn } from '#/lib/utils'
@@ -17,8 +20,9 @@ export const Route = createRootRoute({
             { charSet: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { name: 'robots', content: 'index, follow' },
-            { name: 'theme-color', content: '#0d0b12' },
-            { name: 'color-scheme', content: 'dark' },
+            { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#ffffff' },
+            { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#0f0f0f' },
+            { name: 'color-scheme', content: 'light dark' },
             {
                 title: 'Nicholas Abeleda — Full-Stack Developer & Designer',
             },
@@ -138,8 +142,27 @@ export const Route = createRootRoute({
     shellComponent: RootDocument,
 })
 
+function FloatingThemeToggle() {
+    const { theme, setTheme, resolvedTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => { setMounted(true) }, [])
+    if (!mounted) return <div className="fixed bottom-4 left-4 z-50 h-10 w-10" />
+    const isDark = resolvedTheme === 'dark'
+    return (
+        <button
+            onClick={() => setTheme(isDark ? 'light' : 'dark')}
+            className="cursor-target fixed bottom-4 left-4 z-50 flex items-center justify-center h-10 w-10 rounded-xl border border-border/40 bg-card/80 backdrop-blur-md text-muted-foreground hover:text-foreground transition-colors shadow-sm"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+    )
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
     const isLoading = useRouterState({ select: (s) => s.isLoading });
+    const { pathname } = useLocation();
+    const isHeroDemo = pathname === '/hero-demo';
 
     return (
         <html lang="en" className={cn("h-full", "antialiased")} suppressHydrationWarning>
@@ -149,20 +172,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <body>
                 <RouteLoader isLoading={isLoading} />
                 <LazyTargetCursor />
-                <div className="fixed inset-0 z-0">
-                    <ShapeGrid speed={0.3} squareSize={40} borderColor="rgba(255,255,255,0.03)" shape="square" direction="diagonal" hoverTrailAmount={5} hoverFillColor="rgba(255,255,255,0.10)" />
-                </div>
                 <SmoothScroll />
                 <ScrollReveal />
                 <Providers>
-                    <Header />
-                    <main className="pt-16">
-                        <ErrorBoundary>
+                {!isHeroDemo && <div className="fixed inset-0 z-0">
+                    <ShapeGrid speed={0.3} squareSize={40} shape="square" direction="diagonal" hoverTrailAmount={5} />
+                </div>}
+                    {isHeroDemo ? (
+                        <main className="min-h-screen">
                             {children}
-                        </ErrorBoundary>
-                    </main>
-                    <Footer />
+                        </main>
+                    ) : (
+                        <>
+                            <Header />
+                            <main className="pt-16">
+                                <ErrorBoundary>
+                                    {children}
+                                </ErrorBoundary>
+                            </main>
+                            <Footer />
+                        </>
+                    )}
                     <Scripts />
+                    <FloatingThemeToggle />
                 </Providers>
             </body>
         </html>

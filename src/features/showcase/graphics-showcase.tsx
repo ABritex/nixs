@@ -75,26 +75,20 @@ export function GraphicsShowcase() {
 
     return (
         <section id="graphics" className="relative min-h-screen flex items-start justify-center px-6 py-24 overflow-hidden">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 50% 30%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 50% 70%, hsl(var(--primary)) 0%, transparent 50%)',
-                }}
-            />
-
             <div className="relative z-10 w-full max-w-6xl mx-auto space-y-10">
                 <div className="text-center space-y-3">
-                    <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
+                    <p className="text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
                         <span className="text-accent">$</span> graphics
                     </p>
-                    <h2 className="scroll-reveal text-[clamp(28px,5vw,56px)] font-black leading-[1.05] tracking-tight text-foreground" data-delay="100">
-                        Design Work
+                    <h2 className="text-[clamp(28px,5vw,56px)] font-black leading-[1.05] tracking-tight text-foreground">
+                        Design <span className="text-accent/70 font-mono font-light italic">Work</span>
                     </h2>
-                    <p className="scroll-reveal text-sm text-muted-foreground/70 leading-relaxed max-w-lg mx-auto font-mono" data-delay="200">
+                    <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-lg mx-auto font-mono">
                         Public showcase only. Some work is private (school projects, game communities, etc.).
                     </p>
                 </div>
 
-                <div className="scroll-reveal flex items-center justify-center gap-2" data-delay="250">
+                <div className="flex items-center justify-center gap-2">
                     <span className="font-mono text-[11px] text-muted-foreground/50 bg-muted/30 border border-border/40 rounded px-2 py-0.5">
                         ~/graphics $ ls -la
                     </span>

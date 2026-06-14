@@ -1,29 +1,45 @@
+import { useEffect, useRef } from "react";
+import { gsap } from "#/lib/gsap";
 import { CURRENTLY_LEARNING, WANT_TO_LEARN } from "./constants";
 import { Brain, Target } from "lucide-react";
 
 export function LearningSection() {
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const gridRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const items = gridRef.current?.querySelectorAll('.learn-item')
+            if (items) {
+                gsap.fromTo(items,
+                    { opacity: 0, y: 16 },
+                    { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out',
+                        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
+                    }
+                )
+            }
+        }, sectionRef)
+        return () => ctx.revert()
+    }, [])
+
     return (
-        <section id="learning" className="relative w-full flex flex-col gap-8 overflow-hidden pointer-events-none">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 40% 40%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 60% 60%, hsl(var(--secondary)) 0%, transparent 50%)',
-                }}
-            />
+        <section id="learning" ref={sectionRef} className="relative w-full flex flex-col gap-8 overflow-hidden pointer-events-none">
             <div className="relative z-10 pointer-events-auto px-6 py-24">
                 <div className="text-center space-y-3 mb-12">
-                    <p className="scroll-reveal text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
+                    <p className="text-xs tracking-[0.25em] text-muted-foreground/30 uppercase font-mono">
                         <span className="text-accent">$</span> roadmap
                     </p>
-                    <h2 className="scroll-reveal text-[clamp(28px,5vw,56px)] font-black leading-[1.05] tracking-tight text-foreground" data-delay="100">
+                    <h2 className="text-[clamp(28px,5vw,56px)] font-black leading-[1.05] tracking-tight text-foreground">
+                        <span className="text-muted-foreground/30 font-mono text-[clamp(16px,3vw,32px)]">$&gt;</span>{' '}
                         Learning Path
                     </h2>
-                    <p className="scroll-reveal text-sm text-muted-foreground/70 leading-relaxed max-w-lg mx-auto font-mono" data-delay="200">
+                    <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-lg mx-auto font-mono">
                         What I&apos;m diving into now, and what&apos;s next on the list.
                     </p>
                 </div>
 
-                <div className="scroll-reveal space-y-10">
-                    <div className="flex flex-col items-center">
+                <div ref={gridRef} className="space-y-10">
+                    <div className="learn-item flex flex-col items-center">
                         <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/40 mb-4 font-mono">
                             currently learning
                         </p>
@@ -37,7 +53,7 @@ export function LearningSection() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center">
+                    <div className="learn-item flex flex-col items-center">
                         <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/40 mb-4 font-mono">
                             want to learn
                         </p>

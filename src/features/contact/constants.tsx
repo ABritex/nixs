@@ -1,7 +1,7 @@
 import { Mail, MapPin, Clock, Terminal } from "lucide-react";
 import { PERSON } from "#/constants/personal";
 
-export const CONTACT_COOLDOWN_MS = 30 * 1000;
+export const CONTACT_COOLDOWN_MS = 10 * 1000;
 export const CONTACT_COOLDOWN_STORAGE_KEY = "nixs_contact_cooldown";
 
 export const CONTACT_LINKS = [
@@ -20,25 +20,34 @@ export const CONTACT_LINKS = [
         icon: "/icons/github.svg",
         color: "accent" as const,
         command: "open github",
-        iconClassName: "invert",
+        iconClassName: "dark:invert",
     },
     {
         label: "YouTube",
-        icon: "/icons/youtube.svg",
+        value: "youtube.com/@ABr1tex",
         href: "https://www.youtube.com/@ABr1tex",
-        iconClassName: "invert",
+        icon: "/icons/youtube.svg",
+        color: "secondary" as const,
+        command: "open youtube",
+        iconClassName: "dark:invert",
     },
     {
         label: "Facebook",
-        icon: "/icons/facebook.svg",
+        value: "facebook.com/abeleda123",
         href: "https://www.facebook.com/abeleda123/",
-        iconClassName: "invert",
+        icon: "/icons/facebook.svg",
+        color: "primary" as const,
+        command: "open facebook",
+        iconClassName: "dark:invert",
     },
     {
         label: "X (Twitter)",
-        icon: "/icons/x.svg",
+        value: "x.com/ABr1tex",
         href: "https://x.com/ABr1tex",
-        iconClassName: "invert",
+        icon: "/icons/x.svg",
+        color: "accent" as const,
+        command: "open x",
+        iconClassName: "dark:invert",
     },
 ];
 

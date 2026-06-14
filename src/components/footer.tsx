@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { PERSON } from '#/constants/personal'
 
 const NAV_ITEMS = [
     { label: 'Home', href: '/' },
@@ -14,7 +15,7 @@ const SOCIALS = [
 
 const CTAS = [
     { cmd: 'send-mail', label: 'Say Hello', href: '/contact-me' },
-    { cmd: 'cat projects', label: 'View Projects', href: '/show-case#projects' },
+    { cmd: 'cat showcase', label: 'View Projects', href: '/show-case' },
 ]
 
 export default function Footer() {
@@ -29,13 +30,6 @@ export default function Footer() {
                 }}
             />
 
-            {/* Decorative ascii */}
-            <div className="pointer-events-none absolute right-8 bottom-40 text-[10px] text-muted-foreground/[0.04] font-mono leading-loose select-none hidden lg:block">
-                {'~'.repeat(20)}<br />
-                {'>'.repeat(20)}<br />
-                {'_'.repeat(20)}
-            </div>
-
             <div className="max-w-6xl mx-auto">
                 <div className="rounded-2xl border border-border/40 bg-card/50 backdrop-blur-sm overflow-hidden relative">
 
@@ -46,7 +40,7 @@ export default function Footer() {
                             <span className="w-2.5 h-2.5 rounded-full bg-secondary/50" />
                             <span className="w-2.5 h-2.5 rounded-full bg-accent/50" />
                         </div>
-                        <span className="ml-2 text-[10px] tracking-widest text-muted-foreground/40 font-mono select-none">
+                        <span className="ml-2 text-[10px] tracking-widest text-muted-foreground/60 font-mono select-none">
                             <span className="text-accent">$</span> ./footer.sh
                         </span>
                     </div>
@@ -56,14 +50,14 @@ export default function Footer() {
 
                         {/* Brand / tagline */}
                         <div className="flex-1 space-y-4">
-                            <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase">
+                            <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase">
                                 <span className="text-accent">$</span> ./tagline.sh
                             </p>
                             <p className="text-sm font-semibold leading-relaxed text-foreground max-w-xs">
                                 Where <span className="text-primary">aesthetics</span> &amp;{' '}
                                 <span className="text-accent">functionality</span> meet.
                             </p>
-                            <div className="flex items-center gap-2 text-[10px] text-muted-foreground/30">
+                            <div className="flex items-center gap-2 text-[10px] text-muted-foreground/50">
                                 <span className="inline-block w-2 h-3 bg-accent/60 animate-pulse" />
                                 <span>while true; do build; done</span>
                             </div>
@@ -74,7 +68,7 @@ export default function Footer() {
 
                             {/* Explore */}
                             <div className="space-y-3">
-                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase">
+                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase">
                                     <span className="text-accent">$</span> ls ./explore
                                 </p>
                                 <nav className="flex flex-col gap-2">
@@ -84,7 +78,7 @@ export default function Footer() {
                                             to={href}
                                             className="cursor-target text-sm text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-2 group no-underline"
                                         >
-                                            <span className="text-accent/30 group-hover:text-accent transition-colors">▸</span>
+                                            <span className="text-accent/50 group-hover:text-accent transition-colors">▸</span>
                                             {label}
                                         </Link>
                                     ))}
@@ -93,7 +87,7 @@ export default function Footer() {
 
                             {/* Socials */}
                             <div className="space-y-3">
-                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase">
+                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase">
                                     <span className="text-accent">$</span> curl --socials
                                 </p>
                                 <div className="flex flex-col gap-2">
@@ -105,7 +99,7 @@ export default function Footer() {
                                             rel="noopener noreferrer"
                                             className="cursor-target text-sm text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-2 group no-underline"
                                         >
-                                            <span className="text-accent/30 group-hover:text-accent transition-colors">▸</span>
+                                            <span className="text-accent/50 group-hover:text-accent transition-colors">▸</span>
                                             {label}
                                             <span className="text-[10px] text-muted-foreground/20 group-hover:text-muted-foreground/50 transition-colors">
                                                 ↗
@@ -117,7 +111,7 @@ export default function Footer() {
 
                             {/* CTAs */}
                             <div className="space-y-3">
-                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase">
+                                <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase">
                                     <span className="text-accent">$</span> ./connect.sh
                                 </p>
                                 <div className="flex flex-col gap-2">
@@ -128,7 +122,7 @@ export default function Footer() {
                                             className="cursor-target group flex items-center justify-between rounded-xl border border-border/40 bg-muted/10 px-4 py-2.5 hover:border-primary/30 hover:bg-card/60 transition-all no-underline"
                                         >
                                             <div>
-                                                <p className="text-[10px] font-mono text-accent/50">{`$ ${cmd}`}</p>
+                                                <p className="text-[10px] font-mono text-accent/70">{`$ ${cmd}`}</p>
                                                 <p className="text-sm font-semibold text-foreground">{label}</p>
                                             </div>
                                             <span className="text-accent/60 group-hover:text-accent group-hover:translate-x-1 transition-all">
@@ -154,19 +148,19 @@ export default function Footer() {
                                 letterSpacing: '-0.03em',
                             }}
                         >
-                            nicholas-abeleda
+                            {PERSON.name.toLowerCase().replace(/\s+/g, '-')}
                         </span>
                     </div>
 
                     {/* Bottom bar */}
-                    <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-3 border-t border-border/40 text-[11px] text-muted-foreground/40 gap-2">
+                    <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-3 border-t border-border/40 text-[11px] text-muted-foreground/60 gap-2">
                         <p className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" />
-                            <span className="text-accent">▸</span> nicholas-abeleda &copy; 2026
+                            <span className="text-accent">▸</span> {PERSON.name.toLowerCase()} &copy; {new Date().getFullYear()}
                         </p>
                         <p className="flex items-center gap-2">
                             <span className="text-accent">$</span> cat /etc/location{' '}
-                            <span className="text-secondary">→ Philippines</span>
+                            <span className="text-secondary">&rarr; {PERSON.location}</span>
                         </p>
                     </div>
                 </div>

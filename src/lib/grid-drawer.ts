@@ -13,6 +13,7 @@ export interface GridConfig {
     hoverFillColor: CanvasStrokeStyle;
     shape: 'square' | 'hexagon' | 'circle' | 'triangle';
     hoverTrailAmount: number;
+    vignetteColor?: CanvasStrokeStyle;
 }
 
 export class GridDrawer {
@@ -320,7 +321,7 @@ export class GridDrawer {
             Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
         );
         gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        gradient.addColorStop(1, '#120F17');
+        gradient.addColorStop(1, config.vignetteColor ?? '#120F17');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }

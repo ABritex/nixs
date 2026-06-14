@@ -1,4 +1,4 @@
-import { CheckCircle2, XCircle, Clock, Send } from "lucide-react";
+import { CheckCircle2, XCircle, Clock } from "lucide-react";
 
 type FormState = "idle" | "loading" | "success" | "error" | "cooldown";
 
@@ -38,25 +38,6 @@ export default function TerminalLog({ lines, state, remaining }: TerminalLogProp
             )}
 
             <div className="flex items-center gap-4">
-                <button type="submit" disabled={isLoading || isCooldown} className="cursor-target group flex items-center gap-2.5 rounded-xl bg-primary/10 border border-primary/30 hover:bg-primary/20 hover:border-primary/60 px-6 py-3 text-[13px] font-semibold text-primary transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {isLoading ? (
-                        <>
-                            <span className="w-3.5 h-3.5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                            Sending...
-                        </>
-                    ) : isCooldown ? (
-                        <>
-                            <Clock size={14} />
-                            {cooldownLabel}
-                        </>
-                    ) : (
-                        <>
-                            <Send size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150" />
-                            Send Message
-                        </>
-                    )}
-                </button>
-
                 {state === "success" && (
                     <div className="flex items-center gap-1.5 text-[12px] text-secondary">
                         <CheckCircle2 size={14} />
@@ -72,7 +53,7 @@ export default function TerminalLog({ lines, state, remaining }: TerminalLogProp
                 {isCooldown && (
                     <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
                         <Clock size={14} />
-                        Cooldown active
+                        Cooldown: {cooldownLabel}
                     </div>
                 )}
             </div>

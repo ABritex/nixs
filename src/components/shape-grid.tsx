@@ -1,13 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 import { GridDrawer } from '#/lib/grid-drawer';
 import type { GridConfig } from '#/lib/grid-drawer';
 
 interface ShapeGridProps {
     direction?: 'diagonal' | 'up' | 'right' | 'down' | 'left';
     speed?: number;
-    borderColor?: string;
     squareSize?: number;
-    hoverFillColor?: string;
     shape?: 'square' | 'hexagon' | 'circle' | 'triangle';
     hoverTrailAmount?: number;
 }
@@ -15,9 +14,7 @@ interface ShapeGridProps {
 const ShapeGrid: React.FC<ShapeGridProps> = ({
     direction = 'right',
     speed = 1,
-    borderColor = '#999',
     squareSize = 40,
-    hoverFillColor = '#222',
     shape = 'square',
     hoverTrailAmount = 0,
 }) => {
@@ -25,6 +22,17 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
     const drawerRef = useRef<GridDrawer | null>(null);
     const frameRef = useRef<number | null>(null);
     const isVisibleRef = useRef(true);
+    const { resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+    const isDark = mounted ? resolvedTheme === 'dark' : true;
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const borderColor = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+    const hoverFillColor = isDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.06)';
+    const vignetteColor = isDark ? '#120F17' : 'rgba(255,255,255,0.9)';
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -40,6 +48,7 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
             hoverFillColor,
             shape,
             hoverTrailAmount,
+            vignetteColor,
         };
 
         const drawer = new GridDrawer(ctx, config);
@@ -84,7 +93,7 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
             if (frameRef.current) cancelAnimationFrame(frameRef.current);
             observer.disconnect();
         };
-    }, [direction, speed, borderColor, hoverFillColor, squareSize, shape, hoverTrailAmount]);
+    }, [direction, speed, borderColor, hoverFillColor, vignetteColor, squareSize, shape, hoverTrailAmount]);
 
     return <canvas ref={canvasRef} className="w-full h-full border-none block" />;
 };

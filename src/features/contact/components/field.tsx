@@ -11,7 +11,7 @@ interface FieldProps {
 export default function Field({ label, type, placeholder, value, required, error, onChange }: FieldProps) {
     return (
         <div className="flex flex-col gap-1.5 ">
-            <label className="text-xs tracking-[.2em] uppercase text-muted-foreground/40">
+            <label className="text-xs tracking-[.2em] uppercase text-muted-foreground/60">
                 <span className="text-primary">▸</span> {label}
             </label>
             <input type={type} placeholder={placeholder} value={value} required={required}

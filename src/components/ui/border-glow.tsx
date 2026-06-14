@@ -76,7 +76,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
     className = '',
     edgeSensitivity = 30,
     glowColor = '40 80 80',
-    backgroundColor = '#120F17',
+    backgroundColor = 'hsl(var(--card))',
     borderRadius = 28,
     glowRadius = 40,
     glowIntensity = 1.0,
@@ -173,7 +173,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
             onPointerMove={handlePointerMove}
             onPointerEnter={() => setIsHovered(true)}
             onPointerLeave={() => setIsHovered(false)}
-            className={`relative grid isolate border border-white/15 ${className}`}
+            className={`relative grid isolate border border-border/40 ${className}`}
             style={{
                 background: backgroundColor,
                 borderRadius: `${borderRadius}px`,

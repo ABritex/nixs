@@ -1,49 +1,63 @@
+export type WorkRole = {
+    title: string
+    period: string
+    bullets: readonly string[]
+}
+
+export type WorkEntry = {
+    company: string
+    icon: string
+    roles: readonly WorkRole[]
+}
+
+export type EducationEntry = {
+    school: string
+    degree: string
+    period: string
+    icon: string
+    achievements: readonly string[]
+    button?: {
+        label: string
+        href: string
+    }
+}
+
 export const TIMELINE = {
     work: [
         {
-            year: 'Jan 2026 – May 2026',
-            title: 'OJT — Bids and Awards Committee',
-            desc: 'Handled documentation, SVP preparation, and procurement paperwork for the committee.',
+            company: 'Bids and Awards Committee',
             icon: '/images/bac.webp',
-            tags: ['SVP Papers', 'Documentation', 'Procurement'],
+            roles: [
+                {
+                    title: 'Intern',
+                    period: 'Jan 31, 2026 - May 4, 2026',
+                    bullets: [
+                        'Assisted in the preparation and processing of Small Value Procurement (SVP) documents.',
+                        'Coordinated the routing and collection of required approvals and signatures from the Technical Working Group (TWG), department heads, and the Mayor\'s Office.',
+                        'Organized, sorted, and maintained procurement and bidding documents to ensure accurate record-keeping and compliance.',
+                        'Assisted in the segregation, filing, and compilation of bid folders and procurement records.',
+                        'Supported BAC personnel in administrative and procurement-related tasks.',
+                        'Monitored document completeness and facilitated the timely submission of procurement requirements.',
+                        'Maintained organized physical and digital records of procurement transactions and supporting documents.',
+                    ],
+                },
+            ],
         },
     ],
     education: [
         {
-            year: '2022 – 2026',
-            title: 'BS Information Technology',
-            desc: 'Occidental Mindoro State College. Focused on full-stack development, UI/UX design, and systems architecture.',
+            school: 'Occidental Mindoro State College',
+            degree: 'Bachelor of Science in Information Technology',
+            period: '2022 - 2026',
             icon: '/images/omsc.webp',
-            tags: ['College', 'BSIT'],
+            achievements: [
+                '1st runner up On the spot coding (java)',
+                '3rd best research paper on Southern Tagalog Islands Research and Development Consortium Regional',
+            ],
+            button: {
+                label: 'Thesis Project',
+                href: 'https://mindful-companion-gamma.vercel.app/',
+            },
         },
-        // {
-        //     year: '2020 – 2022',
-        //     title: 'Senior High School (STEM)',
-        //     desc: 'Divine Word College of San Jose. Completed STEM strand with focus on science and mathematics.',
-        //     icon: '/images/dwcsj.webp',
-        //     tags: ['SHS', 'STEM'],
-        // },
-        // {
-        //     year: '2016 – 2020',
-        //     title: 'Junior High School',
-        //     desc: 'Divine Word College of San Jose. Completed K-12 junior high curriculum.',
-        //     icon: '/images/dwcsj.webp',
-        //     tags: ['JHS'],
-        // },
-        // {
-        //     year: '2010 – 2016',
-        //     title: 'Elementary',
-        //     desc: 'Grace Christian School. Completed primary education.',
-        //     icon: '/images/gcs.webp',
-        //     tags: ['Elementary'],
-        // },
     ],
 } as const
-
-export type TimelineEntry = {
-    year: string
-    title: string
-    desc: string
-    icon: string
-    tags: readonly string[]
-}

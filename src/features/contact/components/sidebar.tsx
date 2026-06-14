@@ -4,7 +4,7 @@ export default function ContactSidebar() {
     return (
         <div className="flex flex-col gap-4">
             <div className="scroll-reveal-right space-y-3" data-delay="350">
-                <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase font-mono">
+                <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase font-mono">
                     <span className="text-accent">$</span> curl --socials
                 </p>
                 {CONTACT_LINKS.map((link) => {
@@ -31,7 +31,7 @@ export default function ContactSidebar() {
                             </div>
                             {link.command && link.value && (
                                 <div className="flex flex-col gap-0.5 pl-9">
-                                    <span className="text-[10px] text-muted-foreground/30 font-mono">$ {link.command}</span>
+                                    <span className="text-[10px] text-muted-foreground/50 font-mono">$ {link.command}</span>
                                     <span className={`text-[12px] font-semibold ${c.text} group-hover:underline underline-offset-2`}>
                                         {link.value}
                                     </span>
@@ -43,7 +43,7 @@ export default function ContactSidebar() {
             </div>
 
             <div className="scroll-reveal-right" data-delay="400">
-                <p className="text-[10px] tracking-[.25em] text-muted-foreground/30 uppercase font-mono mb-3">
+                <p className="text-[10px] tracking-[.25em] text-muted-foreground/50 uppercase font-mono mb-3">
                     <span className="text-accent">$</span> support
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -54,7 +54,7 @@ export default function ContactSidebar() {
                             rel="noopener noreferrer"
                             className="cursor-target flex items-center gap-2 rounded-xl border border-border/40 bg-card/50 px-4 py-3 hover:bg-card/70 transition-all"
                         >
-                            <img src={link.icon} alt="" className="w-4 h-4 invert" width={16} height={16} loading="lazy" decoding="async" />
+                            <img src={link.icon} alt="" className="w-4 h-4 dark:invert" width={16} height={16} loading="lazy" decoding="async" />
                             <span className="text-[11px] font-semibold text-foreground">{link.label}</span>
                         </a>
                     ))}
@@ -77,7 +77,7 @@ export default function ContactSidebar() {
                     <span className="text-foreground font-semibold">freelance projects</span>, and{" "}
                     <span className="text-foreground font-semibold">entry-level positions</span>.
                 </p>
-                <p className="text-[10px] text-muted-foreground/30 font-mono border-t border-border/40 pt-3">
+                <p className="text-[10px] text-muted-foreground/50 font-mono border-t border-border/40 pt-3">
                     $ status --check<br />
                     <span className="text-secondary">▸ open_to_work: true</span>
                 </p>
